@@ -21,7 +21,7 @@ import java.util.Scanner;
  */
 public class ShippingStore {
 
-    private ArrayList<PackageOrder> packageOrerList;
+    private ArrayList<PackageOrder> packageOrderList;
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -32,7 +32,7 @@ public class ShippingStore {
      * @throws IOException
      */
     public ShippingStore() throws IOException {
-        packageOrerList = new ArrayList<>();
+        packageOrderList = new ArrayList<>();
         Scanner orderScanner;
 
         File dataFile = new File("PackageOrderDB.txt");
@@ -54,7 +54,7 @@ public class ShippingStore {
             // split values using the space character as separator
             String[] temp = orderScanner.nextLine().split(" ");
 
-            packageOrerList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
+            packageOrderList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
                     Float.parseFloat(temp[4]), Integer.parseInt(temp[5])));
         }
 
@@ -68,7 +68,7 @@ public class ShippingStore {
      *
      */
     public void showPackageOrders() {
-        showPackageOrders(packageOrerList);
+        showPackageOrders(packageOrderList);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ShippingStore {
      */
     public void showPackageOrdersRange(float low, float high) {
         ArrayList<PackageOrder> orders = new ArrayList<>();
-        for (PackageOrder order : packageOrerList) {
+        for (PackageOrder order : packageOrderList) {
             if ((low <= order.getWeight()) && (order.getWeight() <= high)) {
                 orders.add(order);
             }
@@ -130,8 +130,8 @@ public class ShippingStore {
 
         int index = -1;
 
-        for (int i = 0; i < packageOrerList.size(); i++) {
-            String temp = packageOrerList.get(i).getTrackingNumber();
+        for (int i = 0; i < packageOrderList.size(); i++) {
+            String temp = packageOrderList.get(i).getTrackingNumber();
 
             if (trackingNumber.equalsIgnoreCase(temp)) {
                 index = i;
@@ -240,7 +240,7 @@ public class ShippingStore {
         }
 
         //If passed all the checks, add the order to the list
-        packageOrerList.add(new PackageOrder(trackingnumber, type, specification, mailingclass,
+        packageOrderList.add(new PackageOrder(trackingnumber, type, specification, mailingclass,
                 Float.parseFloat(weight), Integer.parseInt(volume)));
         System.out.println("Package Order has been added.\n");
     }
@@ -258,7 +258,7 @@ public class ShippingStore {
             System.out.println("\nAction failed. No package order with the given tracking # exist in database.\n");
         }
         else {
-            packageOrerList.remove(orderID);
+            packageOrderList.remove(orderID);
             System.out.println("\nAction successful. Package order has been removed from the database.\n");
         }
     }
@@ -272,8 +272,8 @@ public class ShippingStore {
      * invalid.
      */
     public PackageOrder getPackageOrder(int i) {
-        if (i < packageOrerList.size() && i >= 0) {
-            return packageOrerList.get(i);
+        if (i < packageOrderList.size() && i >= 0) {
+            return packageOrderList.get(i);
         } else {
             System.out.println("Invalid Index. Please enter another command or 'h' to list the commands.");
             return null;
@@ -289,7 +289,7 @@ public class ShippingStore {
     public void flush() throws IOException {
         PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
 
-        for (PackageOrder c : packageOrerList) {
+        for (PackageOrder c : packageOrderList) {
             pw.print(c.toString());
         }
 
