@@ -54,8 +54,22 @@ public class ShippingStore {
             // split values using the space character as separator
             String[] temp = orderScanner.nextLine().split(" ");
 
-            packageOrerList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
-                    Float.parseFloat(temp[4]), Integer.parseInt(temp[5])));
+            if(temp[1].equals("Envelope")) {
+
+            }
+            else if(temp[1].equals("Box")) {
+
+            }
+            else if(temp[1].equals("Crate")) {
+
+            }
+            else if(temp[1].equals("Crate")) {
+
+            }
+            else {
+                packageOrerList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
+                        Float.parseFloat(temp[4]), Integer.parseInt(temp[5])));
+            }
         }
 
         //Package order list is now in the ArrayList completely so we can close the file
