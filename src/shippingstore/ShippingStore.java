@@ -93,19 +93,36 @@ public class ShippingStore {
      */
     private void showPackageOrders(ArrayList<PackageOrder> orders) {
 
-        System.out.println(" -------------------------------------------------------------------------- ");
-        System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |");
-        System.out.println(" -------------------------------------------------------------------------- ");
+        System.out.println(" ----------------------------------------------------------------------------------------------------------");
+        System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |          Other Details        ");
+        System.out.println(" --------------------------------------------------------------------------------------------------------- ");
 
         for (int i = 0; i < orders.size(); i++) {
-            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s|",
+            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| " +
+                            "| %-10s   %-10s|" ,
                     orders.get(i).getTrackingNumber(),
                     orders.get(i).getType(),
                     orders.get(i).getSpecification(),
                     orders.get(i).getMailingClass(),
                     String.format("%.2f", orders.get(i).getWeight()),
-                    Integer.toString(orders.get(i).getVolume())
-                ));
+                    Integer.toString(orders.get(i).getVolume());
+            if(orders.get(i).getType().equals("Envelope")) {
+                Integer.toString(orders.get(i).getEnvelopeHeight());
+                Integer.toString(orders.get(i).getEnvelopeWidth());
+            }
+            else if(orders.get(i).getType().equals("Envelope")) {
+                Integer.toString(orders.get(i).getBoxDimension());
+                Integer.toString(orders.get(i).getBoxVolume());
+            }
+            else if(orders.get(i).getType().equals("Envelope")) {
+                String.format("%.2f", orders.get(i).getCrateWeight());
+                orders.get(i).getCrateVolume();
+            }
+            else {
+                orders.get(i).getDrumMaterial();
+                String.format("%.2f", orders.get(i).getCrateWeight());
+            }
+            ));
         }
         System.out.println(" --------------------------------------------------------------------------\n");
 
