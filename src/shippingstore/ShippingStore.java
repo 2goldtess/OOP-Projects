@@ -2,7 +2,6 @@ package shippingstore;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * This class is used to represent a database interface for a list of
@@ -28,19 +27,26 @@ public class ShippingStore {
      * during the duration of the program until <CODE>flush()</CODE> is called.
      * @throws IOException
      */
-    public ShippingStore() throws IOException {
+    public ShippingStore() {
         packageOrderList = new ArrayList<>();
 
         File dataFile = new File("PackageOrderDB.ser");
 
         // If data file does not exist, create it.
         if (!dataFile.exists()) {
-            System.out.println("PackageOrderDB.ser does not exist. . .");
 
-            //if the file doesn't exists, create it
-            PrintWriter pw = new PrintWriter("PackageOrderDB.ser");
-            //close newly created file so we can reopen it
-            pw.close();
+            try {
+                System.out.println("PackageOrderDB.ser does not exist. . .");
+
+                //if the file doesn't exists, create it
+                PrintWriter pw = new PrintWriter("PackageOrderDB.ser");
+                //close newly created file so we can reopen it
+                pw.close();
+            } catch (IOException ioe) {
+
+                System.out.println("Problem occurred while trying to access file");
+            }
+
 
         } else if (dataFile.length() == 0) {
 
@@ -288,23 +294,25 @@ public class ShippingStore {
      * This should be the last method to be called before exiting the program.
      * @throws IOException
      */
-    public void flush() throws IOException {
+    public void flush() {
 
-        // save data to regular text file @REMOVE after through with debugging
-        PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
-
-        for (PackageOrder c : packageOrderList) {
-            pw.print(c.toString());
-        }
-
-        pw.close();
-
-        //  serializing packages data
         try(
                 FileOutputStream fos = new FileOutputStream("PackageOrderDB.ser");
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
         ) {
+
+            //  serializing packages data
             oos.writeObject(packageOrderList);
+
+            // save data to regular text file @REMOVE after through with debugging
+            PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
+
+            for (PackageOrder c : packageOrderList) {
+                pw.print(c.toString());
+            }
+
+            pw.close();
+
         } catch (IOException ioe) {
             System.out.println("Problem occurred while saving packages");
             ioe.printStackTrace();
