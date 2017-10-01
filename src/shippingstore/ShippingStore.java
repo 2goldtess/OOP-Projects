@@ -1,9 +1,6 @@
 package shippingstore;
 
-import java.io.IOException;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,50 +30,38 @@ public class ShippingStore {
      */
     public ShippingStore() throws IOException {
         packageOrderList = new ArrayList<>();
-        Scanner orderScanner;
 
-        File dataFile = new File("PackageOrderDB.txt");
+        File dataFile = new File("PackageOrderDB.ser");
 
         // If data file does not exist, create it.
         if (!dataFile.exists()) {
-            System.out.println("PackageOrderDB.txt does not exist, creating one now . . .");
+            System.out.println("PackageOrderDB.ser does not exist. . .");
+
             //if the file doesn't exists, create it
-            PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
+            PrintWriter pw = new PrintWriter("PackageOrderDB.ser");
             //close newly created file so we can reopen it
             pw.close();
-        }
 
-        orderScanner = new Scanner(new FileReader(dataFile));
+        } else if (dataFile.length() == 0) {
 
-        //Initialize the Array List with package orders from PackageOrderDB.txt
-        while (orderScanner.hasNextLine()) {
+            System.out.println("PackageOrderDB.ser is empty");
 
-            // split values using the space character as separator
-            String[] temp = orderScanner.nextLine().split(" ");
+        } else {
 
-            packageOrderList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
-                    Float.parseFloat(temp[4]), Integer.parseInt(temp[5])));
+            try (
+                    FileInputStream fis = new FileInputStream("PackageOrderDB.ser");
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+            ) {
+                packageOrderList = (ArrayList<PackageOrder>) ois.readObject();
 
-            if(temp[1].equals("Envelope")) {
-
-            }
-            else if(temp[1].equals("Box")) {
-
-            }
-            else if(temp[1].equals("Crate")) {
-
-            }
-            else if(temp[1].equals("Crate")) {
-
-            }
-            else {
-                packageOrderList.add(new PackageOrder(temp[0], temp[1], temp[2], temp[3],
-                        Float.parseFloat(temp[4]), Integer.parseInt(temp[5])));
+            } catch (IOException ioe) {
+                System.out.println("Error reading file");
+                ioe.printStackTrace();
+            } catch (ClassNotFoundException cnfe) {
+                System.out.println("Error loading packages");
+                cnfe.printStackTrace();
             }
         }
-
-        //Package order list is now in the ArrayList completely so we can close the file
-        orderScanner.close();
     }
 
     /**
@@ -304,6 +289,8 @@ public class ShippingStore {
      * @throws IOException
      */
     public void flush() throws IOException {
+
+        // save data to regular text file @REMOVE after through with debugging
         PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
 
         for (PackageOrder c : packageOrderList) {
@@ -311,6 +298,17 @@ public class ShippingStore {
         }
 
         pw.close();
+
+        //  serializing packages data
+        try(
+                FileOutputStream fos = new FileOutputStream("PackageOrderDB.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+        ) {
+            oos.writeObject(packageOrderList);
+        } catch (IOException ioe) {
+            System.out.println("Problem occurred while saving packages");
+            ioe.printStackTrace();
+        }
     }
 
 }

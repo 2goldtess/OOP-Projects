@@ -1,5 +1,7 @@
 package shippingstore;
 
+import java.io.Serializable;
+
 /**
  * This class is a very simple representation of a package order. There are only getter
  * methods and no setter methods and as a result a package order cannot be mutated once
@@ -8,7 +10,7 @@ package shippingstore;
  *
  * @author Junye Wen
  */
-public class PackageOrder {
+public class PackageOrder implements Serializable{
 
     private final String trackingnumber;
     private final String type;
