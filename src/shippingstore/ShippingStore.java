@@ -1,5 +1,6 @@
 package shippingstore;
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -56,20 +57,19 @@ public class ShippingStore {
             System.out.println("PackageOrderDB.ser is empty");
 
         } else {
-            Scanner inFile = new Scanner(new FileReader("PackageOrderDB.txt"));
-            while (inFile.hasNext()) {
-                String line = inFile.nextLine();
-                String[] temp = line.split(" ");
-                if(temp.length != 6) {
-                    addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7]);
-                }
-                else {
-                    addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
-                }
+
+            try (
+                    FileInputStream fis = new FileInputStream("PackageOrderDB.ser");
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+            ) {
+                packageOrderList = (ArrayList<PackageOrder>) ois.readObject();
+            } catch (IOException ioe) {
+                System.out.println("Error reading file");
+                ioe.printStackTrace();
+            } catch (ClassNotFoundException cnfe) {
+                System.out.println("Error loading packages");
+                cnfe.printStackTrace();
             }
-            inFile.close();
-                    
-                    // TODO: 10/2/17 Need to make sure we create the proper exceptions; I had to change the way it read the input file
         }
     }
 
@@ -96,7 +96,7 @@ public class ShippingStore {
 
         for (int i = 0; i < orders.size(); i++) {
             if(orders.get(i).getType().equals("Envelope")) {
-            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s                   |",
+            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s    |",
                     orders.get(i).getTrackingNumber(),
                     orders.get(i).getType(),
                     orders.get(i).getSpecification(),
@@ -128,7 +128,7 @@ public class ShippingStore {
                         "Content: " + orders.get(i).getCrateContent()));
             }
             else if(orders.get(i).getType().equals("Drum")) {
-                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s        |",
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s    |",
                         orders.get(i).getTrackingNumber(),
                         orders.get(i).getType(),
                         orders.get(i).getSpecification(),
