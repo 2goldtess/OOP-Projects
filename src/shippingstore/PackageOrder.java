@@ -18,14 +18,14 @@ public class PackageOrder implements Serializable{
     private final String mailingClass;
     private final float weight;
     private final int volume;
-    private int envelopeHeight = 0;
-    private int envelopeWidth = 0;
-    private int boxDimension = 0;
-    private int boxVolume = 0;
-    private float maxCrateWeight = 0;
-    private String crateContent = null;
-    private String drumMaterial = null;
-    private float drumDiameter = 0;
+    private int envelopeHeight;
+    private int envelopeWidth;
+    private int boxDimension;
+    private int boxVolume;
+    private float maxCrateWeight;
+    private String crateContent;
+    private String drumMaterial;
+    private float drumDiameter;
 
     /**
      * This constructor initializes the package order object. The constructor provides no
