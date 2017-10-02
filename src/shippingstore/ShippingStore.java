@@ -18,6 +18,8 @@ import java.util.ArrayList;
 public class ShippingStore {
 
     private ArrayList<PackageOrder> packageOrderList;
+    private ArrayList<Employee> employeesList;
+    private ArrayList<Customer> customersList;
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -195,7 +197,7 @@ public class ShippingStore {
      * 6. The Weight must be non-negative.
      * <p>
      * 7. The Volume must be non-negative.
-     * @param toAdd the <CODE>PackageOrder</CODE> object to add to the
+     * @param 'toAdd' the <CODE>PackageOrder</CODE> object to add to the
      * <CODE>packageOrerList</CODE>
      */
     public void addOrder(String trackingnumber, String type, String specification, String mailingclass, String weight, String volume) {
@@ -258,7 +260,7 @@ public class ShippingStore {
      * will remove the instance of an order that matches tracking number that was
      * passed to this method. If no such order exists, it will produce an error message.
      *
-     * @param toDelete the <CODE>PackageOrder</CODE> object to be removed.
+     * @param 'toDelete' the <CODE>PackageOrder</CODE> object to be removed.
      */
     public void removeOrder(String trackingNum) {
         int orderID = findPackageOrder(trackingNum);
@@ -317,6 +319,31 @@ public class ShippingStore {
             System.out.println("Problem occurred while saving packages");
             ioe.printStackTrace();
         }
+    }
+
+    public void addNewUser(String userType) {
+
+        if (!(userType.equals("Employee") || userType.equals("Customer"))) {
+            System.out.println("Invalid User:%n"
+                    + "User must be one of following: "
+                    + "Employee, Customer");
+            return;
+        }
+
+        if (userType.equals("Employee")) {
+            System.out.printf("Please type the employee info with the following pattern:%n%n" +
+                              " FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER%n" +
+                              "example:%n" +
+                              "John Smith 111-123-4567 2300 10-11-120000%n"
+            );
+
+            //CONTINUE HERE @TODO validation checks for employee info
+
+        }
+
+
+
+
     }
 
 }
