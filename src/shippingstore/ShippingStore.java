@@ -1,6 +1,12 @@
 package shippingstore;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +26,7 @@ public class ShippingStore {
     private ArrayList<PackageOrder> packageOrderList;
     private ArrayList<Employee> employeesList;
     private ArrayList<Customer> customersList;
+
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -172,7 +179,7 @@ public class ShippingStore {
             System.out.println("\nSearch did not find a match.\n");
         }
     }
-    
+
 
     /**
      * This method is used to add a package order to the orderList ArrayList. In order for a
