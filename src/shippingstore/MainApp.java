@@ -26,19 +26,23 @@ public class MainApp {
         ShippingStore shippingstore = new ShippingStore();
 
         String welcomeMessage = "\nWelcome to the Shipping Store database. Choose one of the following functions:\n\n"
-                + "\t1. Show all existing package orders in the database\n"
-                + "\t2. Add a new package order to the database.\n"
-                + "\t3. Delete a package order from a database.\n"
-                + "\t4. Search for a package order (given its Tracking #).\n"
-                + "\t5. Show a list of orders within a given weight range.\n"
-                + "\t6. Exit program.\n";
+                + "\t1.  Show all existing package orders in the database\n"
+                + "\t2.  Add a new package order to the database.\n"
+                + "\t3.  Delete a package order from a database.\n"
+                + "\t4.  Search for a package order (given its Tracking #).\n"
+                + "\t5.  Show a list of orders within a given weight range.\n"
+                + "\t6.  Add new user to the database.\n"
+                + "\t7.  Update user info.\n"
+                + "\t8.  Complete a shipping transaction.\n"
+                + "\t9.  Show completed shipping transactions.\n"
+                + "\t0.  Exit program.\n";
 
         System.out.println(welcomeMessage);
 
         int selection = in.next().charAt(0);
         in.nextLine();
 
-        while (selection != '6') {
+        while (selection != '0') {
 
             switch (selection) {
                 case '1':
@@ -81,8 +85,12 @@ public class MainApp {
                     System.out.println("\nEnter upper-bound weight.\n");
                     high = in.nextFloat();
                     in.nextLine();
-                    
                     shippingstore.showPackageOrdersRange(low, high);
+                    break;
+                case '6':
+                    System.out.println("\nPlease enter the type of user to add to the database");
+                    String userType = in.next().trim();
+                    shippingstore.addNewUser(userType);
                     break;
                 case 'h':
                     System.out.println(welcomeMessage);
