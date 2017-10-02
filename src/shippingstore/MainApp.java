@@ -49,21 +49,83 @@ public class MainApp {
                     shippingstore.showPackageOrders();
                     break;
                 case '2':
-                    System.out.println("\nPlease type description of package with the following pattern:\n"
-                            + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
-                            + "example:\nGFR23 Box Books Retail 9500.00 45\n");
+
+                    boolean inputGood = false;
+
+                    while(!inputGood) {
+                        System.out.println("\nPlease type the following type of package that will be sent from the list of choices: \nPostcard, Letter, Envelope, Packet, Box, Crate, Drum, Roll, Tube.");
+                        String initialinput = in.nextLine();
+
+                        switch (initialinput) {
+                            case "Postcard":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
+                                        + "example:\nGFR23 Postcard Do-not-Bend Ground 1 2\n");
+                                inputGood = true;
+                                break;
+                            case "Letter":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
+                                        + "example:\nZK4J3 Letter Do-not-Bend First-Class 2 1\n");
+                                inputGood = true;
+                                break;
+                            case "Packet":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
+                                        + "example:\n89BH3 Packet Fragile Metro 4 3\n");
+                                inputGood = true;
+                                break;
+                            case "Tube":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
+                                        + "example:\nKI8Y8 Tube N/A Priority 15 24\n");
+                                inputGood = true;
+                                break;
+                            case "Box":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME   LARGEST_DIMENSION   VOLUME\n"
+                                        + "example:\nGU633 Box Books Retail 9500.0 45 50 45\n");
+                                inputGood = true;
+                                break;
+                            case "Crate":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME   MAX_LOAD_WEIGHT   CONTENT\n"
+                                        + "example:\n83RS9 Crate Books Ground 55.0 78 120 Textbooks\n");
+                                inputGood = true;
+                                break;
+                            case "Drum":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME   MATERIAL   DIAMETER\n"
+                                        + "example:\n92IA3 Drum Fragile Metro 2.35 12 Plastic 12.5\n");
+                                inputGood = true;
+                                break;
+                            case "Envelope":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME   HEIGHT   WIDTH\n"
+                                        + "example:\nH43SM Envelope N/A Priority 3.0 4 1 5\n");
+                                inputGood = true;
+                                break;
+                            case "Roll":
+                                System.out.println("\nPlease type description of package with the following pattern:\n"
+                                        + "\n TRACKING #  TYPE   SPECIFICATION   CLASS   WEIGHT   VOLUME\n"
+                                        + "example:\nKN78B Roll N/A Priority 15 24\n");
+                                inputGood = true;
+                                break;
+                            default:
+                                System.out.println("\nImproper input.");
+                                break;
+                        }
+                    }
                     String inTemp = in.nextLine();
 
                     String temp[] = inTemp.split(" ");
 
-                    if(temp.length != 6) {
+                    if (temp.length != 6) {
                         shippingstore.addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7]);
                     }
                     else {
                         shippingstore.addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
                     }
-                    break;
-
                 case '3':
                     shippingstore.showPackageOrders();
 

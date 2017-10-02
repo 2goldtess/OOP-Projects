@@ -1,9 +1,14 @@
 package shippingstore;
 
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * This class is used to represent a database interface for a list of
@@ -22,6 +27,7 @@ public class ShippingStore {
     private ArrayList<PackageOrder> packageOrderList;
     private ArrayList<Employee> employeesList;
     private ArrayList<Customer> customersList;
+
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -218,7 +224,7 @@ public class ShippingStore {
             System.out.println("\nSearch did not find a match.\n");
         }
     }
-    
+
 
     /**
      * This method is used to add a package order to the orderList ArrayList. In order for a
@@ -244,7 +250,7 @@ public class ShippingStore {
      * <p>
      * 7. The Volume must be non-negative.
      * @param 'toAdd' the <CODE>PackageOrder</CODE> object to add to the
-     * <CODE>packageOrerList</CODE>
+     * <CODE>packageOrderList</CODE>
      */
     public void addOrder(String trackingNumber, String type, String specification, String mailingClass, String weight, String volume) {
 
@@ -366,7 +372,7 @@ public class ShippingStore {
     }
 
     /**
-     * This method will remove an order from the <CODE>packageOrerList</CODE> ArrayList. It
+     * This method will remove an order from the <CODE>packageOrderList</CODE> ArrayList. It
      * will remove the instance of an order that matches tracking number that was
      * passed to this method. If no such order exists, it will produce an error message.
      *
