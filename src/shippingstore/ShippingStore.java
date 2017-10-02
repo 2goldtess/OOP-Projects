@@ -205,7 +205,7 @@ public class ShippingStore {
      * <p>
      * 7. The Volume must be non-negative.
      * @param 'toAdd' the <CODE>PackageOrder</CODE> object to add to the
-     * <CODE>packageOrerList</CODE>
+     * <CODE>packageOrderList</CODE>
      */
     public void addOrder(String trackingnumber, String type, String specification, String mailingclass, String weight, String volume) {
 
@@ -263,7 +263,7 @@ public class ShippingStore {
     }
 
     /**
-     * This method will remove an order from the <CODE>packageOrerList</CODE> ArrayList. It
+     * This method will remove an order from the <CODE>packageOrderList</CODE> ArrayList. It
      * will remove the instance of an order that matches tracking number that was
      * passed to this method. If no such order exists, it will produce an error message.
      *
