@@ -12,43 +12,76 @@ import java.io.Serializable;
  */
 public class PackageOrder implements Serializable{
 
-    private final String trackingnumber;
+    private final String trackingNumber;
     private final String type;
     private final String specification;
-    private final String mailingclass;
+    private final String mailingClass;
     private final float weight;
     private final int volume;
+    private int envelopeHeight = 0;
+    private int envelopeWidth = 0;
+    private int boxDimension = 0;
+    private int boxVolume = 0;
+    private float maxCrateWeight = 0;
+    private String crateContent = null;
+    private String drumMaterial = null;
+    private float drumDiameter = 0;
 
     /**
      * This constructor initializes the package order object. The constructor provides no
      * user input validation. That should be handled by the class that creates a
      * package order object.
-     *
-     * @param trackingnumber a <b><CODE>String</CODE></b> that represents the tracking number
+     *  @param trackingNumber a <b><CODE>String</CODE></b> that represents the tracking number
      *
      * @param type a <b><CODE>String</CODE></b> that represents the type.
      * Types: Postcard, Letter, Envelope, Packet, Box, Crate, Drum, Roll, Tube.
-     *
-     * @param specification a <b><CODE>String</CODE></b> that represents the specification.
+     *@param specification a <b><CODE>String</CODE></b> that represents the specification.
      * Specification: Fragile, Books, Catalogs, Do-not-Bend, N/A - one per package
-     *
-     * @param mailingclass a <b><CODE>String</CODE></b> that represents the mailing class
+     *@param mailingClass a <b><CODE>String</CODE></b> that represents the mailing class
      * Mailing class: First-Class, Priority, Retail, Ground, Metro.
+     *@param weight a <b><CODE>float</CODE></b> that represents the weight of the package in oz
+     *@param volume an <b><CODE>int</CODE></b> that represents the volume of the package in
      *
-     * @param weight a <b><CODE>float</CODE></b> that represents the weight of the package in oz
-     *
-     * @param volume an <b><CODE>int</CODE></b> that represents the volume of the package in
-     * cubic inches, calculated as Width x Length x Height
      *
      */
-    public PackageOrder(String trackingnumber, String type, String specification, String mailingclass, float weight, int volume) {
-        this.trackingnumber = trackingnumber;
+    public PackageOrder(String trackingNumber, String type, String specification, String mailingClass, float weight, int volume) {
+        this.trackingNumber = trackingNumber;
         this.type = type;
         this.specification = specification;
-        this.mailingclass = mailingclass;
+        this.mailingClass = mailingClass;
         this.weight = weight;
         this.volume = volume;
     }
+
+    public PackageOrder(String trackingNumber, String type, String specification, String mailingClass, float weight, int volume, int detailOne, int detailTwo) {
+        this(trackingNumber, type, specification, mailingClass, weight, volume);
+        if(type.equals("Envelope")) {
+            this.envelopeHeight = detailOne;
+            this.envelopeWidth = detailTwo;
+            this.boxVolume = 0;
+            this.boxDimension = 0;
+        }
+        else {
+            this.boxDimension = detailOne;
+            this.boxVolume = detailTwo;
+            this.envelopeHeight = 0;
+            this.envelopeWidth = 0;
+        }
+    }
+
+    public PackageOrder(String trackingNumber, String type, String specification, String mailingClass, float weight, int volume, float maxCrateWeight, String crateContent) {
+        this(trackingNumber, type, specification, mailingClass, weight, volume);
+        this.maxCrateWeight = maxCrateWeight;
+        this.crateContent = crateContent;
+    }
+
+    public PackageOrder(String trackingNumber, String type, String specification, String mailingClass, float weight, int volume, String drumMaterial, float drumDiameter) {
+        this(trackingNumber, type, specification, mailingClass, weight, volume);
+        this.drumMaterial = drumMaterial;
+        this.drumDiameter = drumDiameter;
+    }
+
+
 
     /**
      * This method returns the package order's tracking number.
@@ -56,7 +89,7 @@ public class PackageOrder implements Serializable{
      * @return a <b><CODE>String</CODE></b> that is the tracking number of the package order.
      */
     public String getTrackingNumber() {
-        return trackingnumber;
+        return trackingNumber;
     }
 
     /**
@@ -83,7 +116,7 @@ public class PackageOrder implements Serializable{
      * @return a <b><CODE>string</CODE></b> that is the package order's mailing class
      */
     public String getMailingClass() {
-        return mailingclass;
+        return mailingClass;
     }
 
     /**
@@ -110,9 +143,27 @@ public class PackageOrder implements Serializable{
      * @return a <b><CODE>String</CODE></b> that lists the fields of the package order
      * object delineated by a space and in the same order as the constructor
      */
+
+    public int getEnvelopeHeight() { return envelopeHeight; }
+
+    public int getEnvelopeWidth() { return envelopeWidth; }
+
+    public int getBoxDimension() { return boxDimension; }
+
+    public int getBoxVolume() { return boxVolume; }
+
+    public float getMaxCrateWeight() { return maxCrateWeight; }
+
+    public String getCrateContent() { return crateContent; }
+
+    public String getDrumMaterial() { return drumMaterial; }
+
+    public float getDrumDiameter() { return drumDiameter; }
+
+
     @Override
     public String toString() {
-        return trackingnumber + " " + type + " " + specification + " " + mailingclass + " "
+        return trackingNumber + " " + type + " " + specification + " " + mailingClass + " "
         		+ String.format("%.2f", weight) + " " + volume + "\n";
     }
 
@@ -125,7 +176,7 @@ public class PackageOrder implements Serializable{
      * @return the <CODE>boolean</CODE> value of the comparison.
      */
     public boolean equals(PackageOrder c) {
-        return c.getTrackingNumber().equals(this.trackingnumber);
+        return c.getTrackingNumber().equals(this.trackingNumber);
     }
 
 }

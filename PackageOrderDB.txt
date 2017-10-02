@@ -1,6 +1,5 @@
 GFR23 Box Books Retail 9500.00 45 24 200
 ZGJ2E Envelope N/A First-Class 2 2 3 6
 KJ53B Crate Fragile Ground 200 800 400 Toys
-9271Y Drum Do-Not-Bend Metro 50 300 Plastic 12.5
+9271Y Drum Books First-Class 50 300 Plastic 12.5
 27HJ9 Postcard N/A Priority 1 2
-

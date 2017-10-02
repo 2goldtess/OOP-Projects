@@ -91,18 +91,64 @@ public class ShippingStore {
 
         System.out.println(" ----------------------------------------------------------------------------------------------------------");
         System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |          Other Details        ");
-        System.out.println(" --------------------------------------------------------------------------------------------------------- ");
+        System.out.println(" ---------------------------------------------------------------------------------------------------------- ");
 
         for (int i = 0; i < orders.size(); i++) {
-            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s|",
+            if(orders.get(i).getType().equals("Envelope")) {
+            System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s    |",
                     orders.get(i).getTrackingNumber(),
                     orders.get(i).getType(),
                     orders.get(i).getSpecification(),
                     orders.get(i).getMailingClass(),
                     String.format("%.2f", orders.get(i).getWeight()),
-                    Integer.toString(orders.get(i).getVolume())));
+                    Integer.toString(orders.get(i).getVolume()),
+                    "Height: " + Integer.toString(orders.get(i).getEnvelopeHeight()),
+                    "Width: " + Integer.toString(orders.get(i).getEnvelopeWidth())));
+            }
+            else if(orders.get(i).getType().equals("Box"))
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s      %-10s|",
+                        orders.get(i).getTrackingNumber(),
+                        orders.get(i).getType(),
+                        orders.get(i).getSpecification(),
+                        orders.get(i).getMailingClass(),
+                        String.format("%.2f", orders.get(i).getWeight()),
+                        Integer.toString(orders.get(i).getVolume()),
+                        "Dimension: " + Integer.toString(orders.get(i).getBoxDimension()),
+                        "Volume: " + Integer.toString(orders.get(i).getBoxVolume())));
+            else if(orders.get(i).getType().equals("Crate")) {
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s    |",
+                        orders.get(i).getTrackingNumber(),
+                        orders.get(i).getType(),
+                        orders.get(i).getSpecification(),
+                        orders.get(i).getMailingClass(),
+                        String.format("%.2f", orders.get(i).getWeight()),
+                        Integer.toString(orders.get(i).getVolume()),
+                        "Max Load Weight: " + Float.toString(orders.get(i).getBoxVolume()),
+                        "Content: " + orders.get(i).getCrateContent()));
+            }
+            else if(orders.get(i).getType().equals("Drum")) {
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s    |",
+                        orders.get(i).getTrackingNumber(),
+                        orders.get(i).getType(),
+                        orders.get(i).getSpecification(),
+                        orders.get(i).getMailingClass(),
+                        String.format("%.2f", orders.get(i).getWeight()),
+                        Integer.toString(orders.get(i).getVolume()),
+                        "Material: " + orders.get(i).getDrumMaterial(),
+                        "Diameter: " + Float.toString(orders.get(i).getDrumDiameter())));
+            }
+            else {
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s   %-10s|",
+                        orders.get(i).getTrackingNumber(),
+                        orders.get(i).getType(),
+                        orders.get(i).getSpecification(),
+                        orders.get(i).getMailingClass(),
+                        String.format("%.2f", orders.get(i).getWeight()),
+                        Integer.toString(orders.get(i).getVolume()),
+                        "No Other Details", " "));
+            }
         }
-        System.out.println(" --------------------------------------------------------------------------\n");
+        System.out.println(" ----------------------------------------------------------------------------------------------------------\n");
 
     }
 
@@ -345,4 +391,68 @@ public class ShippingStore {
 
     }
 
+    public void addOrder(String trackingnumber, String type, String specification, String mailingClass, String weight, String volume, String detailOne, String detailTwo) {
+
+        if (this.findPackageOrder(trackingnumber) != -1) {
+            System.out.println("Package Order already exists in database. \n");
+            return;
+        }
+
+        if (!trackingnumber.matches("[A-Za-z0-9]{5}")) {
+            System.out.println("Invalid Tracking Number: not proper format."
+                    + "Tracking Number must be at least 5 alphanumeric characters.");
+            return;
+        }
+
+        if (!(type.equals("Postcard") || type.equals("Letter") || type.equals("Envelope")
+                || type.equals("Packet") || type.equals("Box")|| type.equals("Crate")
+                || type.equals("Drum")|| type.equals("Roll")|| type.equals("Tube"))) {
+            System.out.println("Invalid type:\n"
+                    + "Type must be one of following: "
+                    + "Postcard, Letter, Envelope, Packet, Box, Crate, Drum, Roll, Tube.");
+            return;
+        }
+
+        if (!(specification.equals("Fragile") || specification.equals("Books") || specification.equals("Catalogs")
+                || specification.equals("Do-not-Bend") || specification.toUpperCase().equals("N/A"))) {
+            System.out.println("Invalid specification:\n"
+                    + "Specification must be one of following: "
+                    + "Fragile, Books, Catalogs, Do-not-Bend, N/A.");
+            return;
+        }
+
+        if (!(mailingClass.equals("First-Class") || mailingClass.equals("Priority") || mailingClass.equals("Retail")
+                || mailingClass.equals("Ground") || mailingClass.equals("Metro")) ) {
+            System.out.println("Invalid Mailing Class:\n"
+                    + "Mailing Class must be one of following: "
+                    + "First-Class, Priority, Retail, Ground, Metro.");
+            return;
+        }
+
+        if (Float.parseFloat(weight) < 0) {
+            System.out.println("The weight of package cannot be negative.");
+            return;
+        }
+
+        if (!volume.matches("[0-9]{1,6}")) {
+            System.out.println("Invalid volume:\n"
+                    + "The package's volume has to be an integer number between 0 and 999999. ");
+            return;
+        }
+
+        //If passed all the checks, add the order to the list
+        if(type.equals("Envelope") || (type.equals("Box"))) {
+            packageOrderList.add(new PackageOrder(trackingnumber, type, specification, mailingClass,
+                    Float.parseFloat(weight), Integer.parseInt(volume), Integer.parseInt(detailOne), Integer.parseInt(detailTwo)));
+        }
+        else if(type.equals("Crate")) {
+            packageOrderList.add(new PackageOrder(trackingnumber, type, specification, mailingClass,
+                    Float.parseFloat(weight), Integer.parseInt(volume), Float.parseFloat(detailOne), detailTwo));
+        }
+        else {
+            packageOrderList.add(new PackageOrder(trackingnumber, type, specification, mailingClass,
+                    Float.parseFloat(weight), Integer.parseInt(volume), detailOne, Float.parseFloat(detailTwo)));
+        }
+        System.out.println("Package Order has been added.\n");
+    }
 }
