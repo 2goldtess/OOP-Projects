@@ -56,13 +56,14 @@ public class MainApp {
 
                     String temp[] = inTemp.split(" ");
 
-                    if (temp.length != 6) {
-                        System.out.println("Not correct number of fields to process.");
-                        break;
+                    if(temp.length != 6) {
+                        shippingstore.addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7]);
                     }
-
-                    shippingstore.addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
+                    else {
+                        shippingstore.addOrder(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
+                    }
                     break;
+
                 case '3':
                     shippingstore.showPackageOrders();
 
