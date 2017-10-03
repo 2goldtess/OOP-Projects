@@ -1,6 +1,8 @@
 package shippingstore;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +13,8 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.text.DateFormat;
+import java.text.ParseException;
 /**
  * This class is used to represent a database interface for a list of
  * <CODE>Package Order</CODE>'s. It using a plain-text file "PackageOrderDB.txt"
@@ -29,7 +32,9 @@ public class ShippingStore {
     private ArrayList<PackageOrder> packageOrderList;
     private ArrayList<Employee> employeesList;
     private ArrayList<Customer> customersList;
+    private ArrayList<PackageTransaction> transactionsList;
 
+    final static String DATE_FORMAT = "MM-dd-yyyy";
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -385,7 +390,6 @@ public class ShippingStore {
                     Float.parseFloat(weight), Integer.parseInt(volume), detailOne, Float.parseFloat(detailTwo)));
         }
     }
-
     /**
      * This method will remove an order from the <CODE>packageOrderList</CODE> ArrayList. It
      * will remove the instance of an order that matches tracking number that was
@@ -637,5 +641,53 @@ public class ShippingStore {
         System.out.println("|                                                                                   |");
         System.out.println(" -----------------------------------------------------------------------------------");
         System.out.println();
+    }
+
+
+    public boolean findEmployee(int employeeID) {
+        for (int i = 0; i < employeesList.size(); i++) {
+            if (employeeID == employeesList.get(i).getId())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean findUser(int userId) {
+        for (int i = 0; i < customersList.size(); i++) {
+            if (userId == customersList.get(i).getId())
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean isDateValid(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public void addTransaction(String employeeNumber, String trackingNumber, String userId, String shippingDate, String deliveryDate, String costOfShipping) {
+        DateFormat dfsd = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dfdd = new SimpleDateFormat("MM/dd/yyyy");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = dfsd.parse(shippingDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            endDate = dfdd.parse(deliveryDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), startDate,
+                endDate, Float.parseFloat(costOfShipping)));
     }
 }
