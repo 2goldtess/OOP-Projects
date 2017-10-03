@@ -684,8 +684,8 @@ public class ShippingStore {
     public void addTransaction(String employeeNumber, String trackingNumber, String userId, String shippingDate, String deliveryDate, String costOfShipping) {
         DateFormat dfsd = new SimpleDateFormat("MM/dd/yyyy");
         DateFormat dfdd = new SimpleDateFormat("MM/dd/yyyy");
-        Date startDate = null;
-        Date endDate = null;
+        Date startDate = new Date();
+        Date endDate = new Date();
         try {
             startDate = dfsd.parse(shippingDate);
         } catch (ParseException e) {
@@ -699,5 +699,26 @@ public class ShippingStore {
 
         transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), startDate,
                 endDate, Float.parseFloat(costOfShipping)));
+
+    }
+
+    public void showTransactionOrders() {
+        showTransactions(transactionsList);
+    }
+
+    private void showTransactions(ArrayList<PackageTransaction> transactions) {
+
+        System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println(" |  Tracking # |             Shipping Date             |            Delivery Date            |   Cost of Shipping    |   User ID   |  Empoloyee ID  |");
+        System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (PackageTransaction t: transactionsList) {
+            System.out.println(String.format(" | %-11s  | %-30s        | %-30s      | %-17s     | %-11s | %-14s  |",
+                    t.getTrackingNumber(), t.getShippingDate(), t.getDeliveryDate(),
+                    String.format("%.2f", t.getShippingCost()), Integer.toString(t.getUserId()),
+                    Integer.toString(t.getEmployeeId())));
+        }
+
+        System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 }

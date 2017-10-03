@@ -206,7 +206,9 @@ public class MainApp {
                             break;
                         }
                     }
-
+                case '9':
+                    shippingstore.showTransactionOrders();
+                    break;
                 case 'h':
                     System.out.println(welcomeMessage);
                     break;
