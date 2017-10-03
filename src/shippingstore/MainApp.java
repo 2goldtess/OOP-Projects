@@ -155,6 +155,20 @@ public class MainApp {
                     String userType = in.next().trim();
                     shippingstore.addNewUser(userType);
                     break;
+                case '8':
+                    System.out.println("Please enter your Employee number: ");
+                    String employeeNumber = in.nextLine();
+                    // TODO: 10/2/17 check to make sure employee number entered is valid
+                    System.out.println("Employee number is Valid. To complete shipping transaction, please enter the Tracking Number of the package who's shipping transaction you would like to process.");
+                    String trackingNumber = in.nextLine();
+                    if(shippingstore.findPackageOrder(trackingNumber) == -1)
+                    {
+                        System.out.print("Tracking number entered is not associated with any packages currently in database.");
+                    }
+                    else{
+
+                    }
+
                 case 'h':
                     System.out.println(welcomeMessage);
                     break;

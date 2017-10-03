@@ -1,5 +1,1 @@
-632VR Postcard Do-not-Bend First-Class 1.55 6
-H43SM Envelope N/A Priority 3.0 4 1 5
-83RS9 Crate Books Ground 55.0 78 120 Textbooks
-GFR23 Box Books Retail 9500.0 45 50 45
-92IA3 Drum Fragile Metro 2.35 12 Plastic 12.5
+GFR23 Postcard Do-not-Bend Ground 1.00 2
