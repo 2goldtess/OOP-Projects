@@ -49,6 +49,7 @@ public class ShippingStore {
         employeesList = new ArrayList<>();
         customersList = new ArrayList<>();
 
+
         File dataFile = new File("PackageOrderDB.ser");
 
         // If data file does not exist, create it.
@@ -89,6 +90,7 @@ public class ShippingStore {
                 packageOrderList = (ArrayList<PackageOrder>) ois.readObject();
                 customersList = (ArrayList<Customer>) ois.readObject();
                 employeesList = (ArrayList<Employee>) ois.readObject();
+                transactionsList = (ArrayList<PackageTransaction>) ois.readObject();
 
             } catch (IOException ioe) {
                 System.out.println("Problem reading file");
@@ -444,6 +446,8 @@ public class ShippingStore {
             oos.writeObject(customersList);
             // serializing employee data
             oos.writeObject(employeesList);
+            // serializing package transactions data
+            oos.writeObject(transactionsList);
 
             // save data to regular text file @REMOVE after through with debugging
             PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
@@ -492,10 +496,6 @@ public class ShippingStore {
             System.out.println();
             String[] temp = inputStream.split(" ");
 
-            // Validate employee, if invalid return to menu
-            if (isValidEmployeeInfo(temp) == false) {
-                return;
-            }
 
             // If passed all the checks, add the employee to the employeeList
             try {
@@ -503,7 +503,11 @@ public class ShippingStore {
                 float salary = Float.parseFloat(temp[3]);
                 int ddBA = Integer.parseInt(temp[4]);
 
-                employeesList.add(new Employee(employeesList.size()+1, temp[0], temp[1], ssn, salary, ddBA));
+                // Validate employee, if invalid return to menu
+                if (isValidEmployeeInfo(temp, ssn) == false) {
+                    return;
+                }
+                employeesList.add(new Employee(employeesList.size()+5000, temp[0], temp[1], ssn, salary, ddBA));
 
             } catch (IllegalArgumentException iae) {
                 System.out.println("Invalid entry: %n" +
@@ -543,6 +547,10 @@ public class ShippingStore {
             //If info entered passed all the checks, add the user to the customersList
             customersList.add(new Customer(customersList.size()+1,temp[0], temp[1], temp[2], temp2));
         }
+    }
+
+    public void updateUserInfo() {
+
     }
 
 
@@ -586,21 +594,23 @@ public class ShippingStore {
         return false;
     }
 
-    boolean isValidEmployeeInfo(String[] temp) {
+    boolean isValidEmployeeInfo(String[] temp, int ssn) {
 
         //Validate names
         if (temp[0].matches("[a-zA-z\\s.]*") && temp[1].matches("[a-zA-z\\s]*")) {
 
             // Validate SSN
-            if (!(temp[3].matches("[0-9]{9}"))) {
+            if (temp[2].matches("[0-9]{9}")) {
+
+               return true;
+
+            } else {
                 System.out.printf("Invalid SSN # provided:%n" +
                         "SSN # should contain positive integer values of length 9 only " +
                         "  SSN # must be of the following format: %n" +
                         "  111004444 %n%n");
                 return false;
             }
-
-            return true;
         } else {
             System.out.printf("Invalid Name provided:%n" +
                     "Name should contain characters of the alphabet only. " +

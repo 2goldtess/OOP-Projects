@@ -156,6 +156,8 @@ public class MainApp {
                     String userType = in.next().trim();
                     shippingstore.addNewUser(userType);
                     break;
+                case '7':
+                    break;
                 case '8':
                     boolean goodEmployeeNumber = false;
                     boolean goodTrackingNumber = false;
