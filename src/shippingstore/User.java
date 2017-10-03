@@ -1,11 +1,23 @@
 package shippingstore;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private int id;
     private String firstName;
     private String lastName;
 
+    public User(int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return (id + " " + firstName + " " + lastName);
+    }
 
     public int getId() { return id; }
 

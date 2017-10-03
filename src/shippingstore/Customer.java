@@ -1,15 +1,33 @@
 package shippingstore;
 
-public class Customer extends User {
+import java.io.Serializable;
+
+public class Customer extends User implements Serializable {
 
     private String phoneNumber;
-    private String Address;
+    private String address;
+
+    public Customer(int id, String firstName, String lastName, String phoneNumber, String address) {
+        super(id, firstName, lastName);
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+
+    }
+
+    @Override
+    public String toString() {
+        return (getId() + " " + getFirstName() + " " + getLastName() + " " + phoneNumber + " " + address + "\n");
+    }
 
     public String getPhoneNumber() { return phoneNumber; }
 
-    public String getAddress() { return Address; }
+    public String getAddress() { return address; }
 
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
-    public void setAddress(String address) { Address = address; }
+    public void setAddress(String address) { this.address = address; }
+
+
+
+
 }
