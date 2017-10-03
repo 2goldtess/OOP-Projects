@@ -31,8 +31,6 @@ public class ShippingStore {
     private ArrayList<Customer> customersList;
 
 
-
-
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
      * initialize the <CODE>packageOrerList</CODE> with its contents. If no such file
@@ -472,8 +470,8 @@ public class ShippingStore {
 
         if (!(userType.equals("Employee") || userType.equals("Customer"))) {
             System.out.printf("Invalid User:%n"
-                    + "User must be one of following: "
-                    + "Employee, Customer");
+                    + "User must be one of following: %n"
+                    + "Employee, Customer %n%n");
             return;
         }
 
@@ -496,11 +494,17 @@ public class ShippingStore {
             }
 
             // If passed all the checks, add the employee to the employeeList
-            int ssn = Integer.parseInt(temp[2]);
-            float salary = Float.parseFloat(temp[3]);
-            int ddBA = Integer.parseInt(temp[4]);
+            try {
+                int ssn = Integer.parseInt(temp[2]);
+                float salary = Float.parseFloat(temp[3]);
+                int ddBA = Integer.parseInt(temp[4]);
 
-            employeesList.add(new Employee(employeesList.size()+1, temp[0], temp[1], ssn, salary, ddBA));
+                employeesList.add(new Employee(employeesList.size()+1, temp[0], temp[1], ssn, salary, ddBA));
+
+            } catch (IllegalArgumentException iae) {
+                System.out.println("Invalid entry: %n" +
+                                   "Enter positive numbers for the user's  SSN#, Salary, and Bank Account #%n%n");
+            }
         }
 
         if (userType.equals("Customer")) {
@@ -521,10 +525,10 @@ public class ShippingStore {
             }
 
             // Get customer address
-            System.out.printf("Please type the customer street address with the following pattern:%n%n" +
+            System.out.printf("Please type the customer street address with the following pattern: %n%n" +
                               "STREET# STREET-NAME APT# (if applicable) ZIPCODE%n" +
                               "   example: %n" +
-                              "   123 Easy St, 78666 TX%n" );
+                              "   123 Easy St, 78666 TX %n%n" );
             String temp2 = userInput.nextLine().trim();
 
             // Validate customer address
@@ -537,23 +541,34 @@ public class ShippingStore {
         }
     }
 
-    void validateEmployeeInfo(String[] temp) {
-
-    }
 
     boolean isValidateCustomerNameandNumber(String[] temp) {
 
-        // TODO validate names
+        // Validate names
+        if (temp[0].matches("[a-zA-z\\s.]*") && temp[1].matches("[a-zA-z\\s]*")) {
 
-        // Validate phone number
-        if((temp[2]).matches("\\d{3}[-\\.\\s]\\d{3}[-\\.\\s]\\d{4}")){
-            return true;
+            // Then, validate phone number
+            if ((temp[2]).matches("\\d{3}[-\\.\\s]\\d{3}[-\\.\\s]\\d{4}")) {
+
+                return true;
+
+            } else {
+
+                System.out.printf("Invalid Phone Number:%n"
+                        + "  Phone number must be of the following format: %n"
+                        + "  555-123-4567 %n%n");
+                return false;
+            }
+
+        } else {
+
+            System.out.printf("Invalid Name provided:%n" +
+                              "Name should contain characters of the alphabet only. " +
+                              "Special characters and numbers are not allowed.%n" +
+                              "  Name must be of the following format: %n" +
+                              "  John M. Smith or John Michael Smith %n%n");
+            return false;
         }
-
-        System.out.printf("Invalid Phone Number:%n"
-                + "Phone number must be of the following format: %n"
-                + "555-123-4567%n%n");
-        return false;
     }
 
     boolean isValidateCustomerAddress(String address) {
@@ -562,13 +577,65 @@ public class ShippingStore {
             return true;
         }
         System.out.printf("Invalid Address:%n" +
-                "Address must be of the following format: %n" +
-                "123 Easy St, 78666 TX%n%n");
+                "  Address must be of the following format: %n" +
+                "  123 East St, 78666 TX %n%n");
         return false;
     }
 
     boolean isValidEmployeeInfo(String[] temp) {
-        // TODO validate info
-        return true;
+
+        //Validate names
+        if (temp[0].matches("[a-zA-z\\s.]*") && temp[1].matches("[a-zA-z\\s]*")) {
+
+            // Validate SSN
+            if (!(temp[3].matches("[0-9]{9}"))) {
+                System.out.printf("Invalid SSN # provided:%n" +
+                        "SSN # should contain positive integer values of length 9 only " +
+                        "  SSN # must be of the following format: %n" +
+                        "  111004444 %n%n");
+                return false;
+            }
+
+            return true;
+        } else {
+            System.out.printf("Invalid Name provided:%n" +
+                    "Name should contain characters of the alphabet only. " +
+                    "Special characters and numbers are not allowed.%n" +
+                    "  Name must be of the following format: %n" +
+                    "  John M. Smith or John Michael Smith %n%n");
+            return false;
+        }
+
+    }
+
+    void listAllUsers() {
+        System.out.println("CUSTOMERS:");
+        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println("|   ID # |  FIRST NAME | LAST NAME |         PHONE #  |                     ADDRESS |");
+        System.out.println(" -----------------------------------------------------------------------------------");
+
+        for (Customer c: customersList) {
+            System.out.printf("|%8d|%12s|%12s|%18s|%29s|%n",
+                    c.getId(), c.getFirstName(), c.getLastName(), c.getPhoneNumber(), c.getAddress());
+        }
+
+        System.out.println("|                                                                                   |");
+        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println();
+
+        System.out.println("EMPLOYEES:");
+        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println("|   ID # |  FIRST NAME | LAST NAME |       SSN # |  MONTHLY SALARY |     BANK ACC # |");
+        System.out.println(" -----------------------------------------------------------------------------------");
+
+        for (Employee e: employeesList) {
+            System.out.printf("|%8d|%12s|%12s|%13d|%17.2f|%16d|%n", e.getId(), e.getFirstName(), e.getLastName(),
+                                                                  e.getSocialSecurityNumber(), e.getMonthlySalary(),
+                                                                  e.getDdBankAccountNumber());
+        }
+
+        System.out.println("|                                                                                   |");
+        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println();
     }
 }

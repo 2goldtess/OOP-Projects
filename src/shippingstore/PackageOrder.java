@@ -82,8 +82,6 @@ public class PackageOrder implements Serializable{
         this.drumDiameter = drumDiameter;
     }
 
-
-
     /**
      * This method returns the package order's tracking number.
      *

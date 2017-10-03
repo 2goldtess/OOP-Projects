@@ -158,13 +158,16 @@ public class MainApp {
                 case 'h':
                     System.out.println(welcomeMessage);
                     break;
+                case 'l':
+                    shippingstore.listAllUsers();
+                    break;
                 default:
                     System.out.println("That is not a recognized command. Please enter another command or 'h' to list the commands.");
                     break;
 
             }
 
-            System.out.println("Please enter another command or 'h' to list the commands.\n");
+            System.out.println("Please enter another command or 'h' to list the commands or 'l' to see all users.\n");
             selection = in.next().charAt(0);
 
             in.nextLine();
