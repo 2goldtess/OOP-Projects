@@ -1,8 +1,15 @@
 package shippingstore;
 
 import java.io.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * This class is used to represent a database interface for a list of
@@ -107,7 +114,7 @@ public class ShippingStore {
     private void showPackageOrders(ArrayList<PackageOrder> orders) {
 
         System.out.println(" -------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |                         Other Details        ");
+        System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |                  Other Details              |");
         System.out.println(" ------------------------------------------------------------------------------------------------------------------------- ");
 
         for (int i = 0; i < orders.size(); i++) {
@@ -123,7 +130,7 @@ public class ShippingStore {
                     "Width: " + Integer.toString(orders.get(i).getEnvelopeWidth())));
             }
             else if(orders.get(i).getType().equals("Box"))
-                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s      %-10s|",
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s      %-10s               |",
                         orders.get(i).getTrackingNumber(),
                         orders.get(i).getType(),
                         orders.get(i).getSpecification(),
@@ -133,7 +140,7 @@ public class ShippingStore {
                         "Dimension: " + Integer.toString(orders.get(i).getBoxDimension()),
                         "Volume: " + Integer.toString(orders.get(i).getBoxVolume())));
             else if(orders.get(i).getType().equals("Crate")) {
-                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s         |",
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-20s  |",
                         orders.get(i).getTrackingNumber(),
                         orders.get(i).getType(),
                         orders.get(i).getSpecification(),
@@ -144,7 +151,7 @@ public class ShippingStore {
                         "Content: " + orders.get(i).getCrateContent()));
             }
             else if(orders.get(i).getType().equals("Drum")) {
-                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-10s     %-10s        |",
+                System.out.println(String.format("| %-11s| %-8s| %-14s| %-12s| %-11s| %-7s| %-14s     %-10s        |",
                         orders.get(i).getTrackingNumber(),
                         orders.get(i).getType(),
                         orders.get(i).getSpecification(),
