@@ -48,6 +48,7 @@ public class ShippingStore {
         packageOrderList = new ArrayList<>();
         employeesList = new ArrayList<>();
         customersList = new ArrayList<>();
+        transactionsList = new ArrayList<>();
 
 
         File dataFile = new File("PackageOrderDB.ser");
@@ -706,7 +707,7 @@ public class ShippingStore {
         showTransactions(transactionsList);
     }
 
-    private void showTransactions(ArrayList<PackageTransaction> transactions) {
+    public void showTransactions(ArrayList<PackageTransaction> transactionsList) {
 
         System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(" |  Tracking # |             Shipping Date             |            Delivery Date            |   Cost of Shipping    |   User ID   |  Empoloyee ID  |");

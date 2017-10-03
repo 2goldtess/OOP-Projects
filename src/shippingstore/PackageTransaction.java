@@ -19,6 +19,11 @@ public class PackageTransaction {
         this.employeeId = employeeId;
     }
 
+    public String toString() {
+        return userId + " " + trackingNumber + " " + shippingDate + " " + deliveryDate +  " " + shippingCost + " "
+                + employeeId + "\n";
+    }
+
     public int getUserId() {
         return userId;
     }
