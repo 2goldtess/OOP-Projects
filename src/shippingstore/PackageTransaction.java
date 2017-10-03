@@ -10,7 +10,7 @@ public class PackageTransaction {
     private float shippingCost;
     private int employeeId;
 
-        public PackageTransaction(int employeeId, String trackingNumber, int userId, Date shippingDate, Date deliveryDate, float shippingCost) {
+    public PackageTransaction(int employeeId, String trackingNumber, int userId, Date shippingDate, Date deliveryDate, float shippingCost) {
         this.userId = userId;
         this.trackingNumber = trackingNumber;
         this.shippingDate = shippingDate;

@@ -1,6 +1,7 @@
 package shippingstore;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.io.File;
@@ -12,7 +13,8 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.text.DateFormat;
+import java.text.ParseException;
 /**
  * This class is used to represent a database interface for a list of
  * <CODE>Package Order</CODE>'s. It using a plain-text file "PackageOrderDB.txt"
@@ -32,7 +34,7 @@ public class ShippingStore {
     private ArrayList<Customer> customersList;
     private ArrayList<PackageTransaction> transactionsList;
 
-
+    final static String DATE_FORMAT = "MM-dd-yyyy";
 
 
     /**
@@ -389,7 +391,6 @@ public class ShippingStore {
                     Float.parseFloat(weight), Integer.parseInt(volume), detailOne, Float.parseFloat(detailTwo)));
         }
     }
-
     /**
      * This method will remove an order from the <CODE>packageOrderList</CODE> ArrayList. It
      * will remove the instance of an order that matches tracking number that was
@@ -590,8 +591,34 @@ public class ShippingStore {
         return false;
     }
 
-    public void addTransaction(String employeeNumber, String trackingNumber, String userId, Date shippingDate, Date deliveryDate, String costOfShipping) {
-        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), deliveryDate,
-                shippingDate, Float.parseFloat(costOfShipping)));
+    public static boolean isDateValid(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public void addTransaction(String employeeNumber, String trackingNumber, String userId, String shippingDate, String deliveryDate, String costOfShipping) {
+        DateFormat dfsd = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dfdd = new SimpleDateFormat("MM/dd/yyyy");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = dfsd.parse(shippingDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            endDate = dfdd.parse(deliveryDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), startDate,
+                endDate, Float.parseFloat(costOfShipping)));
     }
 }
