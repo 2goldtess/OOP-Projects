@@ -1,5 +1,7 @@
 package shippingstore;
 
+import java.io.*;
+import java.util.Date;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * This class is used to represent a database interface for a list of
@@ -27,6 +30,9 @@ public class ShippingStore {
     private ArrayList<PackageOrder> packageOrderList;
     private ArrayList<Employee> employeesList;
     private ArrayList<Customer> customersList;
+    private ArrayList<PackageTransaction> transactionsList;
+
+
 
 
     /**
@@ -39,6 +45,8 @@ public class ShippingStore {
      */
     public ShippingStore() throws Exception {
         packageOrderList = new ArrayList<>();
+        employeesList = new ArrayList<>();
+        customersList = new ArrayList<>();
 
         File dataFile = new File("PackageOrderDB.ser");
 
@@ -63,17 +71,29 @@ public class ShippingStore {
             System.out.println("PackageOrderDB.ser is empty");
 
         } else {
+            // save data to regular text file @TODO REMOVE after through with testing
+            PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
 
-            try (
-                    FileInputStream fis = new FileInputStream("PackageOrderDB.ser");
-                    ObjectInputStream ois = new ObjectInputStream(fis);
+            for (PackageOrder c : packageOrderList) {
+                pw.print(c.toString());
+            }
+
+            pw.close();
+
+            // reading data from file
+            try(
+                FileInputStream fis = new FileInputStream("PackageOrderDB.ser");
+                ObjectInputStream ois = new ObjectInputStream(fis);
             ) {
                 packageOrderList = (ArrayList<PackageOrder>) ois.readObject();
+                customersList = (ArrayList<Customer>) ois.readObject();
+                employeesList = (ArrayList<Employee>) ois.readObject();
+
             } catch (IOException ioe) {
-                System.out.println("Error reading file");
+                System.out.println("Problem reading file");
                 ioe.printStackTrace();
             } catch (ClassNotFoundException cnfe) {
-                System.out.println("Error loading packages");
+                System.out.println("Error loading information from the database");
                 cnfe.printStackTrace();
             }
         }
@@ -199,7 +219,6 @@ public class ShippingStore {
                 index = i;
                 break;
             }
-
         }
 
         return index;
@@ -419,16 +438,30 @@ public class ShippingStore {
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
         ) {
 
-            //  serializing packages data
+            // serializing packages data
             oos.writeObject(packageOrderList);
+            // serializing customer data
+            oos.writeObject(customersList);
+            // serializing employee data
+            oos.writeObject(employeesList);
 
             // save data to regular text file @REMOVE after through with debugging
             PrintWriter pw = new PrintWriter("PackageOrderDB.txt");
 
-            for (PackageOrder c : packageOrderList) {
-                pw.print(c.toString());
+            pw.printf("Packages%n-----------------------------------------------------------------------%n");
+            for (PackageOrder p : packageOrderList) {
+                pw.print(p.toString());
             }
 
+            pw.printf("%n%n%nCustomers%n-----------------------------------------------------------------------%n");
+            for (Customer c: customersList){
+                pw.print(c);
+            }
+
+            pw.printf("%n%n%nEmployees%n-----------------------------------------------------------------------%n");
+            for (Employee e: employeesList){
+                pw.print(e);
+            }
             pw.close();
 
         } catch (IOException ioe) {
@@ -440,21 +473,125 @@ public class ShippingStore {
     public void addNewUser(String userType) {
 
         if (!(userType.equals("Employee") || userType.equals("Customer"))) {
-            System.out.println("Invalid User:%n"
+            System.out.printf("Invalid User:%n"
                     + "User must be one of following: "
                     + "Employee, Customer");
             return;
         }
 
+        Scanner userInput = new Scanner(System.in);
+
         if (userType.equals("Employee")) {
-            System.out.printf("Please type the employee info with the following pattern:%n%n" +
-                              " FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER%n" +
-                              "example:%n" +
-                              "John Smith 111-123-4567 2300 10-11-120000%n"
-            );
+            System.out.printf("Please type the employee info with the following pattern: %n%n" +
+                              "FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER %n" +
+                              "   example: %n" +
+                              "   John Smith 1123334545 2300 1011120000%n");
 
-            //CONTINUE HERE @TODO validation checks for employee info
+            // Get employee info from inputs stream
+            String inputStream = userInput.nextLine().trim();
+            System.out.println();
+            String[] temp = inputStream.split(" ");
 
+            // Validate employee, if invalid return to menu
+            if (isValidEmployeeInfo(temp) == false) {
+                return;
+            }
+
+            // If passed all the checks, add the employee to the employeeList
+            int ssn = Integer.parseInt(temp[2]);
+            float salary = Float.parseFloat(temp[3]);
+            int ddBA = Integer.parseInt(temp[4]);
+
+            employeesList.add(new Employee(employeesList.size()+1, temp[0], temp[1], ssn, salary, ddBA));
         }
+
+        if (userType.equals("Customer")) {
+            System.out.printf( "Please type the customer info with the following pattern:%n%n" +
+                               "FIRSTNAME LASTNAME PHONE-NUMBER%n" +
+                               "   example:%n" +
+                               "   John Smith 222-443-4523%n");
+
+
+            // Get customer name and number from input stream
+            String inputStream = userInput.nextLine();
+            System.out.println();
+            String[] temp = inputStream.split(" ");
+
+            // Validate customer info, if invalid return to menu
+            if (isValidateCustomerNameandNumber(temp) == false) {
+                return;
+            }
+
+            // Get customer address
+            System.out.printf("Please type the customer street address with the following pattern:%n%n" +
+                              "STREET# STREET-NAME APT# (if applicable) ZIPCODE%n" +
+                              "   example: %n" +
+                              "   123 Easy St, 78666 TX%n" );
+            String temp2 = userInput.nextLine().trim();
+
+            // Validate customer address
+            if (isValidateCustomerAddress(temp2) == false) {
+                return;
+            }
+
+            //If info entered passed all the checks, add the user to the customersList
+            customersList.add(new Customer(customersList.size()+1,temp[0], temp[1], temp[2], temp2));
+        }
+    }
+
+    void validateEmployeeInfo(String[] temp) {
+
+    }
+
+    boolean isValidateCustomerNameandNumber(String[] temp) {
+
+        // TODO validate names
+
+        // Validate phone number
+        if((temp[2]).matches("\\d{3}[-\\.\\s]\\d{3}[-\\.\\s]\\d{4}")){
+            return true;
+        }
+
+        System.out.printf("Invalid Phone Number:%n"
+                + "Phone number must be of the following format: %n"
+                + "555-123-4567%n%n");
+        return false;
+    }
+
+    boolean isValidateCustomerAddress(String address) {
+
+        if (address.matches("[\\\\\\d]+[A-Za-z0-9\\\\\\s,\\\\.]+?[\\\\\\d\\\\]+[\\\\\\s]+[a-zA-Z]+")) {
+            return true;
+        }
+        System.out.printf("Invalid Address:%n" +
+                "Address must be of the following format: %n" +
+                "123 Easy St, 78666 TX%n%n");
+        return false;
+    }
+
+    boolean isValidEmployeeInfo(String[] temp) {
+        // TODO validate info
+        return true;
+    }
+
+    public boolean findEmployee(int employeeID) {
+        for (int i = 0; i < employeesList.size(); i++) {
+            if (employeeID == employeesList.get(i).getId())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean findUser(int userId) {
+        for (int i = 0; i < customersList.size(); i++) {
+            if (userId == customersList.get(i).getId())
+                return true;
+        }
+        return false;
+    }
+
+    public void addTransaction(String employeeNumber, String trackingNumber, String userId, Date shippingDate, Date deliveryDate, String costOfShipping) {
+        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), deliveryDate,
+                shippingDate, Float.parseFloat(costOfShipping)));
     }
 }

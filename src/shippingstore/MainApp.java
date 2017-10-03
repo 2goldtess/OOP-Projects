@@ -1,5 +1,6 @@
 package shippingstore;
 
+import java.sql.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -158,15 +159,31 @@ public class MainApp {
                 case '8':
                     System.out.println("Please enter your Employee number: ");
                     String employeeNumber = in.nextLine();
-                    // TODO: 10/2/17 check to make sure employee number entered is valid
-                    System.out.println("Employee number is Valid. To complete shipping transaction, please enter the Tracking Number of the package who's shipping transaction you would like to process.");
-                    String trackingNumber = in.nextLine();
-                    if(shippingstore.findPackageOrder(trackingNumber) == -1)
+                    if(shippingstore.findEmployee(Integer.parseInt(employeeNumber)))
                     {
-                        System.out.print("Tracking number entered is not associated with any packages currently in database.");
+                        System.out.println("Employee number is Valid. To complete shipping transaction, please enter the Tracking Number of the package who's shipping transaction you would like to process.");
+                        String trackingNumber = in.nextLine();
+                        if(shippingstore.findPackageOrder(trackingNumber) != -1)
+                        {
+                            System.out.print("Please enter the ID of the user this shipping transaction will be assocaited with: ");
+                            String userId = in.nextLine();
+                            if(shippingstore.findUser(Integer.parseInt(userId))) {
+                                System.out.println("Please enter the Shipping Date, Delivery Date, and cost of shipping in this format: \nSHIPPING DATE   DELIVERY DATE   COST OF SHIPPING \n example: 03/21/2017 03/24/2017 15");
+                                String transactionTemp = in.nextLine();
+                                String words[] = transactionTemp.split(" ");
+                                shippingstore.addTransaction(employeeNumber, trackingNumber, userId, words[0], words[1], words[2]);
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                        else{
+                            System.out.print("Tracking number entered is not associated with any packages currently in database.");
+                            break;
+                        }
                     }
                     else{
-
+                        break;
                     }
 
                 case 'h':

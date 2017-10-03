@@ -3,9 +3,67 @@ package shippingstore;
 import java.util.Date;
 
 public class PackageTransaction {
+    private int userId;
+    private String trackingNumber;
     private Date shippingDate;
     private Date deliveryDate;
     private float shippingCost;
+    private int employeeId;
 
-    // CONTINUE HERE
+        public PackageTransaction(int employeeId, String trackingNumber, int userId, Date shippingDate, Date deliveryDate, float shippingCost) {
+        this.userId = userId;
+        this.trackingNumber = trackingNumber;
+        this.shippingDate = shippingDate;
+        this.deliveryDate = deliveryDate;
+        this.shippingCost = shippingCost;
+        this.employeeId = employeeId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public Date getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(Date shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public float getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(float shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 }
