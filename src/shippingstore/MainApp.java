@@ -216,7 +216,7 @@ public class MainApp {
                     shippingstore.listAllUsers();
                     break;
                 default:
-                    System.out.println("That is not a recognized command. Please enter another command or 'h' to list the commands.");
+                    System.out.println("That is not a recognized command.");
                     break;
 
             }
