@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fd3a67c-3e3d-4633-a9db-b08a4c35411b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/shippingstore/TransactionComparator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PackageOrderDB.ser" afterPath="$PROJECT_DIR$/PackageOrderDB.ser" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AssignmentTwo/shippingstore/MainApp.class" afterPath="$PROJECT_DIR$/out/production/AssignmentTwo/shippingstore/MainApp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AssignmentTwo/shippingstore/ShippingStore.class" afterPath="$PROJECT_DIR$/out/production/AssignmentTwo/shippingstore/ShippingStore.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PackageOrderDB.txt" afterPath="$PROJECT_DIR$/PackageOrderDB.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shippingstore/MainApp.java" afterPath="$PROJECT_DIR$/src/shippingstore/MainApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shippingstore/PackageTransaction.java" afterPath="$PROJECT_DIR$/src/shippingstore/PackageTransaction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shippingstore/ShippingStore.java" afterPath="$PROJECT_DIR$/src/shippingstore/ShippingStore.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/shippingstore/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
-              <caret line="189" column="69" lean-forward="true" selection-start-line="189" selection-start-column="69" selection-end-line="189" selection-end-column="69" />
+            <state relative-caret-position="610">
+              <caret line="223" column="30" lean-forward="false" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -40,16 +41,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShippingStore.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ShippingStore.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shippingstore/ShippingStore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1042">
-              <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="413">
+              <caret line="504" column="0" lean-forward="true" selection-start-line="504" selection-start-column="0" selection-end-line="504" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#31719#31720#0" expanded="true" />
-                <element signature="e#31769#31770#0" expanded="true" />
+                <element signature="e#40943#40944#0" expanded="true" />
+                <element signature="e#40993#40994#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionComparator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shippingstore/TransactionComparator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,24 +109,26 @@
         <option value="$PROJECT_DIR$/src/shippingstore/Customer.java" />
         <option value="$PROJECT_DIR$/src/shippingstore/Employee.java" />
         <option value="$PROJECT_DIR$/src/shippingstore/PackageOrder.java" />
-        <option value="$PROJECT_DIR$/PackageOrderDB.txt" />
         <option value="$PROJECT_DIR$/src/shippingstore/PackageTransaction.java" />
         <option value="$PROJECT_DIR$/PackageOrderDB.txt" />
-        <option value="$PROJECT_DIR$/src/shippingstore/MainApp.java" />
-        <option value="$PROJECT_DIR$/src/shippingstore/MainApp.java" />
         <option value="$PROJECT_DIR$/src/shippingstore/PackageTransaction.java" />
+        <option value="$PROJECT_DIR$/src/shippingstore/TransactionComparator.java" />
+        <option value="$PROJECT_DIR$/PackageOrderDB.txt" />
         <option value="$PROJECT_DIR$/src/shippingstore/ShippingStore.java" />
         <option value="$PROJECT_DIR$/src/shippingstore/ShippingStore.java" />
+        <option value="$PROJECT_DIR$/src/shippingstore/MainApp.java" />
+        <option value="$PROJECT_DIR$/src/shippingstore/MainApp.java" />
       </list>
     </option>
   </component>
   <component name="MavenRunner">
     <option name="jreName" value="#JAVA_INTERNAL" />
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="831" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="x" value="-1920" />
+    <option name="y" value="-180" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -316,7 +329,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="-1920" y="-180" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -327,12 +340,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32697546" sideWeight="0.19916143" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3688029" sideWeight="0.8008386" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30287984" sideWeight="0.8008386" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3070588" sideWeight="0.48194444" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.305859" sideWeight="0.48194444" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19313304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14376996" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -383,14 +396,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/io/ObjectInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22260">
-          <caret line="1534" column="0" lean-forward="false" selection-start-line="1534" selection-start-column="0" selection-end-line="1534" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11130">
@@ -404,8 +409,8 @@
           <caret line="98" column="60" lean-forward="true" selection-start-line="98" selection-start-column="60" selection-end-line="98" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -481,8 +486,8 @@
           <caret line="201" column="7" lean-forward="false" selection-start-line="201" selection-start-column="7" selection-end-line="201" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -501,8 +506,8 @@
           <caret line="101" column="65" lean-forward="false" selection-start-line="101" selection-start-column="65" selection-end-line="101" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -551,8 +556,8 @@
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -586,8 +591,8 @@
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -729,8 +734,8 @@
           <caret line="480" column="60" lean-forward="false" selection-start-line="480" selection-start-column="60" selection-end-line="480" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -774,22 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PackageOrderDB.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shippingstore/MainApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="189" column="69" lean-forward="true" selection-start-line="189" selection-start-column="69" selection-end-line="189" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shippingstore/PackageTransaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -800,15 +789,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/shippingstore/TransactionComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PackageOrderDB.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/shippingstore/ShippingStore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1042">
-          <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state relative-caret-position="413">
+          <caret line="504" column="0" lean-forward="true" selection-start-line="504" selection-start-column="0" selection-end-line="504" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#31719#31720#0" expanded="true" />
-            <element signature="e#31769#31770#0" expanded="true" />
+            <element signature="e#40943#40944#0" expanded="true" />
+            <element signature="e#40993#40994#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shippingstore/MainApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="610">
+          <caret line="223" column="30" lean-forward="false" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>

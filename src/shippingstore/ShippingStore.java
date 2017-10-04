@@ -2,6 +2,7 @@ package shippingstore;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 
 import java.io.File;
@@ -121,6 +122,8 @@ public class ShippingStore {
      * @param orders the package order list to be displayed.
      */
     private void showPackageOrders(ArrayList<PackageOrder> orders) {
+
+        Collections.sort(orders, new TransactionComparator());
 
         System.out.println(" -------------------------------------------------------------------------------------------------------------------------");
         System.out.println("| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |                  Other Details              |");
@@ -490,15 +493,21 @@ public class ShippingStore {
 
         if (userType.equals("Employee")) {
             System.out.printf("Please type the employee info with the following pattern: %n%n" +
-                              "FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER %n" +
+                              "FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER%n" +
                               "   example: %n" +
-                              "   John Smith 1123334545 2300 1011120000%n");
+                              "   John Smith 1123334545 2300 1011120000%n" +
+                              "              (9-digits)      (10-digits)%n%n");
 
             // Get employee info from inputs stream
             String inputStream = userInput.nextLine().trim();
             System.out.println();
             String[] temp = inputStream.split(" ");
 
+            // check to see if the correct amount of information is entered before parsing array
+            if (temp.length < 4) {
+                System.out.printf("You did not provide enough information. Check your entry and try again%n%n");
+                return;
+            }
 
             // If passed all the checks, add the employee to the employeeList
             try {
@@ -511,9 +520,10 @@ public class ShippingStore {
                     return;
                 }
                 employeesList.add(new Employee(employeesList.size()+5000, temp[0], temp[1], ssn, salary, ddBA));
+                System.out.printf("New employee was added to the database!%n%n");
 
             } catch (IllegalArgumentException iae) {
-                System.out.println("Invalid entry: %n" +
+                System.out.printf("Invalid entry: %n" +
                                    "Enter positive numbers for the user's  SSN#, Salary, and Bank Account #%n%n");
             }
         }
@@ -549,6 +559,7 @@ public class ShippingStore {
 
             //If info entered passed all the checks, add the user to the customersList
             customersList.add(new Customer(customersList.size()+1,temp[0], temp[1], temp[2], temp2));
+            System.out.printf("New customer was added to the database!%n%n");
         }
     }
 
@@ -559,43 +570,214 @@ public class ShippingStore {
         switch (user) {
             case "Employee":
             case "employee":
-                System.out.println("Enter the employee's ID #: ");
-                int id  = Integer.parseInt(userInput.nextLine().trim());
+                try {
+                    System.out.printf("Enter the employee's ID #:   ");
+                    int eid = Integer.parseInt(userInput.nextLine().trim());
 
+                    // find employee by id
+                    Employee employee = findEmployeeById(eid);
 
-                // find user by id
-                Employee employee = findEmployeeById(id);
+                    // if an employee with that id does not exist return to main menu
+                    if (employee == null)
+                        return;
 
-                if (employee == null)
+                    // otherwise, ask the uses what field they would like to update
+                    System.out.printf("%n%n             User Update Options%n" +
+                            "     --------------------------------------------------------------%n" +
+                            "\t\t'f'    - To update the first name%n" +
+                            "\t\t'l'    - To update the last name%n" +
+                            "\t\t's'    - To update the social security number%n" +
+                            "\t\t'm'    - To update the monthly salary%n" +
+                            "\t\t'b'    - To update the (direct deposit) bank account number%n" +
+                            "\t\t'c'    - To cancel or exit%n%n%n"
+                    );
+
+                    System.out.printf("What would you like to update?  ");
+                    char choice = userInput.nextLine().charAt(0);
+
+                    switch (choice) {
+                        case 'f':
+                            System.out.printf("Enter the new first name:  ");
+                            String firstName = userInput.nextLine().trim();
+
+                            if (firstName.matches("[a-zA-z\\s]*")) {
+                                employee.setFirstName(firstName);
+                                System.out.printf("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, first name was not updated... Try again");
+                            break;
+                        case 'l':
+                            System.out.printf("Enter last name:  ");
+                            String lastName = userInput.nextLine().trim();
+
+                            if (lastName.matches("[a-zA-z\\s]*")) {
+                                employee.setLastName(lastName);
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, last name was not updated... Try again");
+                            break;
+                        case 's':
+                            System.out.printf("Enter the new social security number:  ");
+                            String ssn = userInput.nextLine().trim();
+
+                            if (ssn.matches("[0-9]{9}")) {
+                                employee.setSocialSecurityNumber(Integer.parseInt(ssn));
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, ssn was not updated... Try again");
+                            break;
+                        case 'm':
+                            System.out.printf("Enter the new salary amount:  ");
+                            String salary = userInput.nextLine().trim();
+
+                            if (salary.matches("^[0-9]*$")) {
+                                employee.setMonthlySalary(Float.parseFloat(salary));
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, salary was not updated... Try again");
+                            break;
+                        case 'b':
+                            System.out.println("Enter new bank account number: ");
+                            String bban = userInput.nextLine().trim();
+
+                            if (bban.matches("[0-9]")) {
+                                employee.setDdBankAccountNumber(Integer.parseInt(bban));
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, bank account was not updated... Try again");
+                            break;
+                        case 'c':
+                            return;
+                        default:
+                            System.out.println("That is not a recognized command.");
+                            break;
+                    }
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Please enter valid input values only");
                     return;
-
-                // CONTINUE HERE @TODO finish prompting for updated information
-
-                break;
+                }
             case "Customer":
             case "customer":
-                break;
+                try {
+
+                    System.out.printf("Enter the customer's ID #:   ");
+                    int cid = Integer.parseInt(userInput.nextLine().trim());
+
+                    // find customer by id
+                    Customer customer = findCustomerById(cid);
+
+                    // if customer with that id does not exist, return to main menu
+                    if (customer == null) {
+                        return;
+                    }
+
+                    // otherwise, ask the user what fields they would like to update
+                    System.out.printf("%n%n             User Update Options%n" +
+                            "     ---------------------------------------%n" +
+                            "\t\t'f'    -To update the first name%n" +
+                            "\t\t'l'    -To update the last name%n" +
+                            "\t\t'p'    -To update the phone number%n" +
+                            "\t\t'a'    -To update the address %n" +
+                            "\t\t'c'    -To cancel or exit%n%n%n"
+                    );
+
+                    System.out.printf("What would you like to update?  ");
+                    char choice2 = userInput.nextLine().charAt(0);
+
+                    switch (choice2) {
+                        case 'f':
+                            System.out.printf("Enter first name:  ");
+                            String firstName = userInput.nextLine().trim();
+
+                            if (firstName.matches("[a-zA-z\\s]*")) {
+                                customer.setFirstName(firstName);
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, first name was not updated... Try again");
+                            break;
+                        case 'l':
+                            System.out.printf("Enter last name:  ");
+                            String lastName = userInput.nextLine().trim();
+
+                            if (lastName.matches("[a-zA-z\\s]*")) {
+                                customer.setLastName(lastName);
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, first name was not updated... Try again");
+                            break;
+                        case 'p':
+                            System.out.printf("Enter the new phone number:  ");
+                            String phone = userInput.nextLine().trim();
+
+                            if (phone.matches("\\d{3}[-\\.\\s]\\d{3}[-\\.\\s]\\d{4}")) {
+                                customer.setPhoneNumber(phone);
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            System.out.println("Invalid input, phone number was not updated... Try again");
+                            break;
+                        case 'a':
+                            System.out.printf("Enter the new address:  ");
+                            String address = userInput.nextLine().trim();
+
+                            if (isValidateCustomerAddress(address)) {
+                                customer.setAddress(address);
+                                System.out.println("Updated!");
+                                return;
+                            }
+                            break;
+                        case 'c':
+                            return;
+                        default:
+                            System.out.println("That is not a recognized command.");
+                            break;
+                    }
+                }catch (NumberFormatException nfe) {
+                    System.out.println("Please enter valid input values only");
+                }
             default:
                 System.out.printf("Invalid User:%n"
-                    + "User must be one of following: %n"
-                    + "Employee, Customer %n%n");
+                        + "User must be one of following: %n"
+                        + "Employee, Customer %n%n");
                 return;
         }
     }
 
-    public Employee findEmployeeById(int id) {
+    public Employee findEmployeeById(int eid) {
         for (Employee e: employeesList) {
-            if (e.getId() == id) {
+            if (e.getId() == eid) {
                 return e;
             }
         }
-        System.out.printf("Employee with %d does not exist%n", id);
+        System.out.printf("Employee with ID# %d does not exist%n%n", eid);
+        return null;
+    }
+
+    private Customer findCustomerById(int cid) {
+        for (Customer c: customersList) {
+            if (c.getId() == cid) {
+                return c;
+            }
+        }
+        System.out.printf("Customer with ID# %d does not exist%n%n", cid);
         return null;
     }
 
 
     boolean isValidateCustomerNameandNumber(String[] temp) {
 
+        // check to see if the correct amount of information is entered before parsing array
+        if (temp.length < 3) {
+            System.out.printf("You did not provide enough information. Check you entry and try again%n%n");
+            return false;
+        }
         // Validate names
         if (temp[0].matches("[a-zA-z\\s.]*") && temp[1].matches("[a-zA-z\\s]*")) {
 
@@ -673,7 +855,6 @@ public class ShippingStore {
                     c.getId(), c.getFirstName(), c.getLastName(), c.getPhoneNumber(), c.getAddress());
         }
 
-        System.out.println("|                                                                                                     |");
         System.out.println(" -----------------------------------------------------------------------------------------------------");
         System.out.println();
 
@@ -688,7 +869,6 @@ public class ShippingStore {
                                                                   e.getDdBankAccountNumber());
         }
 
-        System.out.println("|                                                                                                     |");
         System.out.println(" -----------------------------------------------------------------------------------------------------");
         System.out.println();
     }
@@ -752,7 +932,7 @@ public class ShippingStore {
         System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
 
         for (PackageTransaction t: transactionsList) {
-            System.out.println(String.format(" | %-11s  | %-30s        | %-30s      | %-17s     | %-11s | %-14s  |",
+            System.out.println(String.format(" | %-11s | %-31s       | %-30s      | %-17s     | %-11s | %-13s  |",
                     t.getTrackingNumber(), t.getShippingDate(), t.getDeliveryDate(),
                     String.format("%.2f", t.getShippingCost()), Integer.toString(t.getUserId()),
                     Integer.toString(t.getEmployeeId())));

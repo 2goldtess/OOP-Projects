@@ -151,12 +151,12 @@ public class MainApp {
                     shippingstore.showPackageOrdersRange(low, high);
                     break;
                 case '6':
-                    System.out.println("\nPlease enter the type of user to add to the database");
+                    System.out.printf("\nWould you like to add a new 'Employee' or a new 'Customer'?   ");
                     String userType = in.next().trim();
                     shippingstore.addNewUser(userType);
                     break;
                 case '7':
-                    System.out.println("\nWould you like to update an Employee or Customer information?");
+                    System.out.printf("\nWho's information would you like to update an 'Employee' or a 'Customer'?   ");
                     String user = in.next().trim();
                     shippingstore.updateUserInfo(user);
                     break;
