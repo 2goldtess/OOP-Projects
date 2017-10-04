@@ -1,8 +1,9 @@
 package shippingstore;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PackageTransaction {
+public class PackageTransaction implements Serializable {
     private int userId;
     private String trackingNumber;
     private Date shippingDate;

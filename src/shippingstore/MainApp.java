@@ -50,7 +50,6 @@ public class MainApp {
                     shippingstore.showPackageOrders();
                     break;
                 case '2':
-
                     boolean inputGood = false;
 
                     while (!inputGood) {
@@ -157,6 +156,9 @@ public class MainApp {
                     shippingstore.addNewUser(userType);
                     break;
                 case '7':
+                    System.out.println("\nWould you like to update an Employee or Customer information?");
+                    String user = in.next().trim();
+                    shippingstore.updateUserInfo(user);
                     break;
                 case '8':
                     boolean goodEmployeeNumber = false;
@@ -175,13 +177,13 @@ public class MainApp {
                                 if (shippingstore.findPackageOrder(trackingNumber) != -1) {
                                     goodTrackingNumber = true;
                                     while (!goodUserId) {
-                                        System.out.print("Please enter the ID of the user this shipping transaction will be assocaited with: ");
+                                        System.out.print("Please enter the ID of the user this shipping transaction will be assocaited with: \n");
                                         String userId = in.nextLine();
                                         if (shippingstore.findUser(Integer.parseInt(userId))) {
                                             goodUserId = true;
                                             while (!goodInput) {
                                                 System.out.println("Please enter the Shipping Date, Delivery Date, and cost of shipping in this format: \nSHIPPING DATE   DELIVERY DATE   COST OF SHIPPING \n example: 03/21/2017 03/24/2017 15");
-                                                String transactionTemp = in.nextLine();
+                                                String transactionTemp = in.nextLine().trim();
                                                 String words[] = transactionTemp.split(" ");
                                                 if (shippingstore.isDateValid(words[0]) && shippingstore.isDateValid(words[1])) {
                                                     shippingstore.addTransaction(employeeNumber, trackingNumber, userId, words[0], words[1], words[2]);
@@ -193,19 +195,17 @@ public class MainApp {
                                             }
                                         } else {
                                             System.out.println("User ID entered does not match any current users in database.");
-                                            break;
                                         }
                                     }
                                 } else {
                                     System.out.println("Tracking number entered is not associated with any packages currently in database.");
-                                    break;
                                 }
                             }
                         } else {
                             System.out.println("Employee numbered entered not found.");
-                            break;
                         }
                     }
+                    break;
                 case '9':
                     shippingstore.showTransactionOrders();
                     break;
@@ -223,14 +223,10 @@ public class MainApp {
 
             System.out.println("Please enter another command or 'h' to list the commands or 'l' to see all users.\n");
             selection = in.next().charAt(0);
-
             in.nextLine();
         }
-
         in.close();
         shippingstore.flush();
-        
         System.out.println("Done!");
-
     }
 }

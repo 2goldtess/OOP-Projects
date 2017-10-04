@@ -34,7 +34,7 @@ public class ShippingStore {
     private ArrayList<Customer> customersList;
     private ArrayList<PackageTransaction> transactionsList;
 
-    final static String DATE_FORMAT = "MM-dd-yyyy";
+    final static String DATE_FORMAT = "MM/dd/yyyy";
 
     /**
      * This constructor is hard-coded to open "<CODE>PackageOrderDB.txt</CODE>" and
@@ -99,6 +99,8 @@ public class ShippingStore {
             } catch (ClassNotFoundException cnfe) {
                 System.out.println("Error loading information from the database");
                 cnfe.printStackTrace();
+            } catch (NullPointerException npe) {
+                System.out.println("Data does not exist in file");
             }
         }
     }
@@ -550,8 +552,45 @@ public class ShippingStore {
         }
     }
 
-    public void updateUserInfo() {
+    public void updateUserInfo(String user) {
 
+        Scanner userInput = new Scanner(System.in);
+
+        switch (user) {
+            case "Employee":
+            case "employee":
+                System.out.println("Enter the employee's ID #: ");
+                int id  = Integer.parseInt(userInput.nextLine().trim());
+
+
+                // find user by id
+                Employee employee = findEmployeeById(id);
+
+                if (employee == null)
+                    return;
+
+                // CONTINUE HERE @TODO finish prompting for updated information
+
+                break;
+            case "Customer":
+            case "customer":
+                break;
+            default:
+                System.out.printf("Invalid User:%n"
+                    + "User must be one of following: %n"
+                    + "Employee, Customer %n%n");
+                return;
+        }
+    }
+
+    public Employee findEmployeeById(int id) {
+        for (Employee e: employeesList) {
+            if (e.getId() == id) {
+                return e;
+            }
+        }
+        System.out.printf("Employee with %d does not exist%n", id);
+        return null;
     }
 
 
@@ -625,32 +664,32 @@ public class ShippingStore {
 
     void listAllUsers() {
         System.out.println("CUSTOMERS:");
-        System.out.println(" -----------------------------------------------------------------------------------");
-        System.out.println("|   ID # |  FIRST NAME | LAST NAME |         PHONE #  |                     ADDRESS |");
-        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
+        System.out.println("|   ID # |  FIRST NAME  |    LAST NAME |           PHONE #  |                                 ADDRESS |");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
 
         for (Customer c: customersList) {
-            System.out.printf("|%8d|%12s|%12s|%18s|%29s|%n",
+            System.out.printf("|%8d|%14s|%14s|%20s|%41s|%n",
                     c.getId(), c.getFirstName(), c.getLastName(), c.getPhoneNumber(), c.getAddress());
         }
 
-        System.out.println("|                                                                                   |");
-        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println("|                                                                                                     |");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
         System.out.println();
 
         System.out.println("EMPLOYEES:");
-        System.out.println(" -----------------------------------------------------------------------------------");
-        System.out.println("|   ID # |  FIRST NAME | LAST NAME |       SSN # |  MONTHLY SALARY |     BANK ACC # |");
-        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
+        System.out.println("|   ID # |     FIRST NAME |     LAST NAME |       SSN # |  MONTHLY SALARY |                BANK ACC # |");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
 
         for (Employee e: employeesList) {
-            System.out.printf("|%8d|%12s|%12s|%13d|%17.2f|%16d|%n", e.getId(), e.getFirstName(), e.getLastName(),
+            System.out.printf("|%8d|%16s|%15s|%13d|%17.2f|%27d|%n", e.getId(), e.getFirstName(), e.getLastName(),
                                                                   e.getSocialSecurityNumber(), e.getMonthlySalary(),
                                                                   e.getDdBankAccountNumber());
         }
 
-        System.out.println("|                                                                                   |");
-        System.out.println(" -----------------------------------------------------------------------------------");
+        System.out.println("|                                                                                                     |");
+        System.out.println(" -----------------------------------------------------------------------------------------------------");
         System.out.println();
     }
 
@@ -700,14 +739,13 @@ public class ShippingStore {
 
         transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), startDate,
                 endDate, Float.parseFloat(costOfShipping)));
-
     }
 
     public void showTransactionOrders() {
         showTransactions(transactionsList);
     }
 
-    public void showTransactions(ArrayList<PackageTransaction> transactionsList) {
+    private void showTransactions(ArrayList<PackageTransaction> transactions) {
 
         System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(" |  Tracking # |             Shipping Date             |            Delivery Date            |   Cost of Shipping    |   User ID   |  Empoloyee ID  |");
