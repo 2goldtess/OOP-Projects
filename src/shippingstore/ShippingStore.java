@@ -22,7 +22,7 @@ import java.text.ParseException;
  * life by calling <CODE>flush()</CODE>. This class also provides methods for
  * adding, remove, and searching for shipping orders from the list.
  *
- * @author Junye Wen
+ * @author Zachery Golla, Kentessa Fanfair
  */
 public class ShippingStore {
 
