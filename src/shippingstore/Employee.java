@@ -2,6 +2,11 @@ package shippingstore;
 
 import java.io.Serializable;
 
+/**
+ * This is the employee class
+ *
+ * @author Zachary Golla, Kentessa Fanfair
+ */
 public class Employee extends User implements Serializable {
 
     private int socialSecurityNumber;

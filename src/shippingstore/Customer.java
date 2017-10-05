@@ -2,6 +2,11 @@ package shippingstore;
 
 import java.io.Serializable;
 
+/**
+ * This is the customer class
+ *
+ * @author Zachary Golla, Kentessa Fanfair
+ */
 public class Customer extends User implements Serializable {
 
     private String phoneNumber;

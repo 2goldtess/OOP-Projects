@@ -2,6 +2,11 @@ package shippingstore;
 
 import java.io.Serializable;
 
+/**
+ * This is the user class
+ *
+ * @author Zachary Golla, Kentessa Fanfair
+ */
 public class User implements Serializable {
 
     private int id;

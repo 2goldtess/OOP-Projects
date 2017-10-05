@@ -3,6 +3,11 @@ package shippingstore;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This is the package class
+ *
+ * @author Zachary Golla, Kentessa Fanfair
+ */
 public class PackageTransaction implements Serializable {
     private int userId;
     private String trackingNumber;

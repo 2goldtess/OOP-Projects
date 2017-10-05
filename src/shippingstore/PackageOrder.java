@@ -8,7 +8,7 @@ import java.io.Serializable;
  * initialized. A package order object can also call the two override methods
  * <CODE>toString()</CODE> and <CODE>equals()</CODE>
  *
- * @author Junye Wen
+ * @author Zachery Golla, Kentessa Fanfair
  */
 public class PackageOrder implements Serializable{
 
