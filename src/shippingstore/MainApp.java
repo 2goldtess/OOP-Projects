@@ -12,7 +12,7 @@ public class MainApp {
 
     /**
      * This method will begin the user interface console. Main uses a loop to
-     * continue doing commands until the user types '6'. A lot of user input
+     * continue doing commands until the user types '0'. A lot of user input
      * validation is done in the loop. At least enough to allow the interface
      * with ShippingStore to be safe.
      *
@@ -51,7 +51,8 @@ public class MainApp {
                     boolean inputGood = false;
 
                     while (!inputGood) {
-                        System.out.println("\nPlease type the following type of package that will be sent from the list of choices: \nPostcard, Letter, Envelope, Packet, Box, Crate, Drum, Roll, Tube.");
+                        System.out.println("\nPlease type the following type of package that will be sent from the " +
+                                "list of choices: \nPostcard, Letter, Envelope, Packet, Box, Crate, Drum, Roll, Tube.");
                         String initialinput = in.nextLine();
 
                         switch (initialinput) {
@@ -165,47 +166,61 @@ public class MainApp {
                     boolean goodInput = false;
 
                     while(!goodEmployeeNumber) {
-                        System.out.println("Please enter your Employee number: ");
-                        String employeeNumber = in.nextLine();
-                        if (shippingstore.findEmployee(Integer.parseInt(employeeNumber))) {
-                            goodEmployeeNumber = true;
-                            while(!goodTrackingNumber) {
-                                System.out.println("To complete shipping transaction, please enter the Tracking Number of the package who's shipping transaction you would like to process.");
-                                String trackingNumber = in.nextLine();
-                                if (shippingstore.findPackageOrder(trackingNumber) != -1) {
-                                    goodTrackingNumber = true;
-                                    while (!goodUserId) {
-                                        System.out.print("Please enter the ID of the user this shipping transaction will be assocaited with: \n");
-                                        String userId = in.nextLine();
-                                        if (shippingstore.findUser(Integer.parseInt(userId))) {
-                                            goodUserId = true;
-                                            while (!goodInput) {
-                                                System.out.println("Please enter the Shipping Date, Delivery Date, and cost of shipping in this format: \nSHIPPING DATE   DELIVERY DATE   COST OF SHIPPING \n example: 03/21/2017 03/24/2017 15");
-                                                String transactionTemp = in.nextLine().trim();
-                                                String words[] = transactionTemp.split(" ");
-                                                if (shippingstore.isDateValid(words[0]) && shippingstore.isDateValid(words[1])) {
-                                                    shippingstore.addTransaction(employeeNumber, trackingNumber, userId, words[0], words[1], words[2]);
-                                                    goodInput = true;
-                                                    shippingstore.removeOrder(trackingNumber);
-                                                } else {
-                                                    System.out.println("Input Invalid.");
+                        try {
+
+
+                            System.out.println("Please enter your Employee number: ");
+                            String employeeNumber = in.nextLine();
+                            if (shippingstore.findEmployee(Integer.parseInt(employeeNumber))) {
+                                goodEmployeeNumber = true;
+                                while (!goodTrackingNumber) {
+                                    System.out.println("To complete shipping transaction, please enter the Tracking" +
+                                            " Number of the package who's shipping transaction you would like to process.");
+                                    String trackingNumber = in.nextLine();
+                                    if (shippingstore.findPackageOrder(trackingNumber) != -1) {
+                                        goodTrackingNumber = true;
+                                        while (!goodUserId) {
+                                            System.out.print("Please enter the ID of the user this shipping transaction " +
+                                                    "will be associated with: \n");
+                                            String userId = in.nextLine();
+                                            if (shippingstore.findUser(Integer.parseInt(userId))) {
+                                                goodUserId = true;
+                                                while (!goodInput) {
+                                                    System.out.println("Please enter the Shipping Date, Delivery Date, " +
+                                                            "and cost of shipping in this format: \nSHIPPING DATE  " +
+                                                            " DELIVERY DATE   COST OF SHIPPING \n" +
+                                                            " example: 03/21/2017 03/24/2017 15");
+                                                    String transactionTemp = in.nextLine().trim();
+                                                    String words[] = transactionTemp.split(" ");
+                                                    if (shippingstore.isDateValid(words[0]) && shippingstore.isDateValid(words[1])) {
+                                                        shippingstore.addTransaction(employeeNumber, trackingNumber,
+                                                                userId, words[0], words[1], words[2]);
+                                                        goodInput = true;
+                                                        shippingstore.removeOrder(trackingNumber);
+                                                    } else {
+                                                        System.out.println("Input Invalid.");
+                                                    }
                                                 }
+                                            } else {
+                                                System.out.println("User ID entered does not match any current users " +
+                                                                   "in database.");
                                             }
-                                        } else {
-                                            System.out.println("User ID entered does not match any current users in database.");
                                         }
+                                    } else {
+                                        System.out.println("Tracking number entered is not associated with any" +
+                                                           " packages currently in database.");
                                     }
-                                } else {
-                                    System.out.println("Tracking number entered is not associated with any packages currently in database.");
                                 }
+                            } else {
+                                System.out.println("Employee numbered entered not found.");
                             }
-                        } else {
-                            System.out.println("Employee numbered entered not found.");
+                        }catch (NumberFormatException nfe ) {
+                            System.out.println("Please enter valid input only");
                         }
                     }
                     break;
                 case '9':
-                    shippingstore.showTransactionOrders();
+                    shippingstore.showTransactions();
                     break;
                 case 'h':
                     System.out.println(welcomeMessage);
@@ -216,7 +231,6 @@ public class MainApp {
                 default:
                     System.out.println("That is not a recognized command.");
                     break;
-
             }
 
             System.out.println("Please enter another command or 'h' to list the commands or 'l' to see all users.\n");

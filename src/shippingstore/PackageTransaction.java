@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * This is the package class
+ * This is the PackageTransaction class
  *
  * @author Zachary Golla, Kentessa Fanfair
  */

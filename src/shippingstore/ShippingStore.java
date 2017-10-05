@@ -179,7 +179,6 @@ public class ShippingStore {
             }
         }
         System.out.println(" -------------------------------------------------------------------------------------------------------------------------\n");
-
     }
 
     /**
@@ -329,7 +328,19 @@ public class ShippingStore {
         System.out.println("Package Order has been added.\n");
     }
 
-    public void addOrder(String trackingNumber, String type, String specification, String mailingClass, String weight, String volume, String detailOne, String detailTwo) {
+    /**
+     * This methods add an package to the list of packages
+     * @param trackingNumber
+     * @param type
+     * @param specification
+     * @param mailingClass
+     * @param weight
+     * @param volume
+     * @param detailOne
+     * @param detailTwo
+     */
+    public void addOrder(String trackingNumber, String type, String specification, String mailingClass,
+                         String weight, String volume, String detailOne, String detailTwo) {
 
         if (this.findPackageOrder(trackingNumber) != -1) {
             System.out.println("Package Order already exists in database. \n");
@@ -381,7 +392,8 @@ public class ShippingStore {
         //If passed all the checks, add the order to the list
         if(type.equals("Envelope") || (type.equals("Box"))) {
             packageOrderList.add(new PackageOrder(trackingNumber, type, specification, mailingClass,
-                    Float.parseFloat(weight), Integer.parseInt(volume), Integer.parseInt(detailOne), Integer.parseInt(detailTwo)));
+                    Float.parseFloat(weight), Integer.parseInt(volume),
+                    Integer.parseInt(detailOne), Integer.parseInt(detailTwo)));
         }
         else if(type.equals("Crate")) {
             packageOrderList.add(new PackageOrder(trackingNumber, type, specification, mailingClass,
@@ -493,8 +505,8 @@ public class ShippingStore {
             System.out.printf("Please type the employee info with the following pattern: %n%n" +
                               "FIRSTNAME LASTNAME SSN MONTHLY-SALARY DIRECT-DEPOSIT-BANK-NUMBER%n" +
                               "   example: %n" +
-                              "   John Smith 1123334545 2300 1011120000%n" +
-                              "              (9-digits)      (10-digits)%n%n");
+                              "   John Smith 112333454 2300 1011120000%n" +
+                              "              (9-digits)      (10-digits max)%n%n");
 
             // Get employee info from inputs stream
             String inputStream = userInput.nextLine().trim();
@@ -855,7 +867,7 @@ public class ShippingStore {
 
             } else {
                 System.out.printf("Invalid SSN # provided:%n" +
-                        "SSN # should contain positive integer values of length 9 only " +
+                        "SSN # should contain positive integer values of length 9 only %n" +
                         "  SSN # must be of the following format: %n" +
                         "  111004444 %n%n");
                 return false;
@@ -868,11 +880,10 @@ public class ShippingStore {
                     "  John M. Smith or John Michael Smith %n%n");
             return false;
         }
-
     }
 
     /**
-     * This methods outputs the lists of all users for the console
+     * This methods outputs lists of all users to the console
      */
     void listAllUsers() {
         System.out.println("CUSTOMERS:");
@@ -902,7 +913,12 @@ public class ShippingStore {
         System.out.println();
     }
 
-
+    /**
+     * This methods looks through the list of employee and return true if an employee matching the given id exists
+     * in the list
+     * @param employeeID
+     * @return true, if employee exist, false otherwise
+     */
     public boolean findEmployee(int employeeID) {
         for (int i = 0; i < employeesList.size(); i++) {
             if (employeeID == employeesList.get(i).getId())
@@ -911,6 +927,12 @@ public class ShippingStore {
         return false;
     }
 
+    /**
+     * This method looks through the list if customers and return true if a customer matching the given id exist in the
+     * list
+     * @param userId
+     * @return true, if customer exist, false otherwise
+     */
     public boolean findUser(int userId) {
         for (int i = 0; i < customersList.size(); i++) {
             if (userId == customersList.get(i).getId())
@@ -919,6 +941,11 @@ public class ShippingStore {
         return false;
     }
 
+    /**
+     * This methods validates the data received as input from the user
+     * @param date
+     * @return true if the date is valid, false otherwise
+     */
     public static boolean isDateValid(String date) {
         try {
             DateFormat df = new SimpleDateFormat(DATE_FORMAT);
@@ -930,7 +957,17 @@ public class ShippingStore {
         }
     }
 
-    public void addTransaction(String employeeNumber, String trackingNumber, String userId, String shippingDate, String deliveryDate, String costOfShipping) {
+    /**
+     * This method adds a transaction to the complete transaction list
+     * @param employeeNumber
+     * @param trackingNumber
+     * @param userId
+     * @param shippingDate
+     * @param deliveryDate
+     * @param costOfShipping
+     */
+    public void addTransaction(String employeeNumber, String trackingNumber, String userId, String shippingDate,
+                               String deliveryDate, String costOfShipping) {
         DateFormat dfsd = new SimpleDateFormat("MM/dd/yyyy");
         DateFormat dfdd = new SimpleDateFormat("MM/dd/yyyy");
         Date startDate = new Date();
@@ -946,15 +983,16 @@ public class ShippingStore {
             e.printStackTrace();
         }
 
-        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber, Integer.parseInt(userId), startDate,
+        transactionsList.add(new PackageTransaction(Integer.parseInt(employeeNumber), trackingNumber,
+                Integer.parseInt(userId), startDate,
                 endDate, Float.parseFloat(costOfShipping)));
     }
 
-    public void showTransactionOrders() {
-        showTransactions(transactionsList);
-    }
 
-    private void showTransactions(ArrayList<PackageTransaction> transactions) {
+    /**
+     * This methods prints the list of completed transactions to the console
+     */
+    public void showTransactions() {
 
         System.out.println(" ----------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(" |  Tracking # |             Shipping Date             |            Delivery Date            |   Cost of Shipping    |   User ID   |  Empoloyee ID  |");
